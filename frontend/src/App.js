@@ -1,8 +1,8 @@
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home.jsx';
-import Autorization from './pages/Autorization.jsx';
+import Login from './pages/Login.jsx';
 import NotFound from './pages/NotFound.jsx';
 
 const App = () => {
@@ -26,7 +26,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Autorization />} />
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
