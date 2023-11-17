@@ -1,6 +1,8 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 
+import Title from '../components/Title/Title';
+
 const LoginForm = () => {
   return ( 
     <Formik initialValues={{ email: '', password: '' }}
@@ -23,7 +25,7 @@ const LoginForm = () => {
         <div className="container">
           <div className="form-card">
             <Form className="col-12 col-md-6 mt-3 mt-mb-0">
-              <h1 className="text-center mb-4">Войти</h1>
+              <Title title="Войти"/>
               <div className="form-floating mb-3">
                 <Field
                   name="username"
@@ -36,7 +38,7 @@ const LoginForm = () => {
                 />
                 <label for="username">Ваш ник</label>
               </div>
-              <div class="form-floating mb-4">
+              <div className="form-floating mb-4">
                 <Field 
                   name="password"
                   autocomplete="current-password"
