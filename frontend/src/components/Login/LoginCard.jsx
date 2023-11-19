@@ -1,5 +1,5 @@
-import LoginForm from "../LoginForm.jsx/LoginForm";
-import LoginFooter from "../LoginFooter/LoginFooter";
+import LoginForm from "./LoginForm";
+import LoginFooter from "./LoginFooter";
 
 import loginImg from '../../img/login.jpeg';
 

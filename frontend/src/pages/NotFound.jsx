@@ -1,4 +1,4 @@
-import notFound from '../../img/notFound.jpeg';
+import notFound from '../img/notFound.jpg';
 import Title from '../components/Title/Title';
 
 const NotFound = () => {
