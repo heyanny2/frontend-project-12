@@ -7,9 +7,21 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  color: var(--grey-dark)
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.container-fluid {
+  background: var(--white-grey-light);
+}
+
+.card-img {
+  width: 270px;
+  height: 270px;
+  margin-right: 10px;
 }
