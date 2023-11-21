@@ -1,60 +1,52 @@
 import React from 'react';
-import { Formik, Form, Field } from 'formik';
-import Title from '../Title/Title';
+import { useFormik } from 'formik';
+import Form from 'react-bootstrap/Form';
 import Button from '../Button/Button';
+import loginSchema from '../validation/loginSchema';
 
 
 
 const LoginForm = () => {
+  const formik = useFormik({
+    initialValues: { email: '', password: '' },
+    validationSchema: {loginSchema},
+    onSubmit: (setSubmitting) => {
+      console.log("Form is validated");
+      setSubmitting(false);
+    }
+  });
   return ( 
-    <Formik initialValues={{ email: '', password: '' }}
-      onSubmit={({ setSubmitting }) => {
-          console.log("Form is validated");
-          setSubmitting(false);
-        }
-      }
-    >
-      {({
-        //  values,
-        //  errors,
-        //  touched,
-        //  handleChange,
-        //  handleBlur,
-        //  handleSubmit,
-        //  isSubmitting,
-         /* and other goodies */
-      }) => (
-        <Form className="col-12 col-md-6 mt-3 mt-mb-0">
-          <Title title="Войти"/>
-          <div className="form-floating mb-3">
-            <Field
-              name="username"
-              autocomplete="username"
-              required=""
-              placeholder="Ваш ник"
-              id="username"
-              className="form-control"
-              value=""
-            />
-            <label for="username">Ваш ник</label>
-          </div>
-          <div className="form-floating mb-4">
-            <Field 
-              name="password"
-              autocomplete="current-password"
-              required=""
-              placeholder="Пароль"
-              type="password"
-              id="password"
-              className="form-control"
-              value=""
-            />
-            <label className="form-label" for="password">Пароль</label>
-          </div>
-          <Button title="Войти"/>
-        </Form>
-       )}
-    </Formik>
+    <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
+      <h1 className="title text-center mb-4">Войти</h1>
+      <div className="form-floating mb-3">
+        <Form.Control 
+          name="username"
+          autocomplete="username"
+          required
+          placeholder="Ваш ник"
+          type="text"
+          id="username"
+          className="form-control"
+          value=""
+          onChange={formik.handleChange}
+        />
+        <Form.Label htmlFor="username">Ваш ник</Form.Label>
+      </div>
+      <div className="form-floating mb-4">
+        <Form.Control 
+          name="password"
+          autocomplete="current-password"
+          required
+          placeholder="Пароль"
+          type="password"
+          id="password"
+          className="form-control"
+          value=""
+        />
+        <Form.Label htmlFor="password" className="form-label">Пароль</Form.Label>
+      </div>
+      <Button title="Войти"/>
+    </Form>
   )
 };
 

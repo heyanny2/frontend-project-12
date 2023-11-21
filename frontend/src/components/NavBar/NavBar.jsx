@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
-import './style.css';
+import "./style.css";
+
 
 
 const NavBar = () => {
@@ -12,7 +13,7 @@ const NavBar = () => {
 
   return (
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
-      <div className="container">
+      <div className="nav-container">
         <NavLink className="navbar-brand" to="/">
           Hexlet Chat
         </NavLink>
