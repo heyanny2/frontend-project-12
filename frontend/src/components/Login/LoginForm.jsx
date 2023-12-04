@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import Form from 'react-bootstrap/Form';
 import Button from '../Button/Button';
 import loginSchema from '../validation/loginSchema';
+import axios from 'axios';
 
 
 
@@ -10,11 +11,19 @@ const LoginForm = () => {
   const formik = useFormik({
     initialValues: { email: '', password: '' },
     validationSchema: {loginSchema},
-    onSubmit: (setSubmitting) => {
-      console.log("Form is validated");
-      setSubmitting(false);
+    onSubmit: async () => {
+      try {
+        await axios 
+                .post('/api/v1/login', { username: 'admin', password: 'admin' })
+                .then((response) => {
+                  localStorage.setItem('user', JSON.stringify(response.data));
+        });
+      } catch (error) {
+        throw new Error
+      }
     }
   });
+
   return ( 
     <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
       <h1 className="title text-center mb-4">Войти</h1>
