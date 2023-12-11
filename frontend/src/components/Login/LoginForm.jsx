@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import Form from 'react-bootstrap/Form';
 import Button from '../Button/Button';
 import loginSchema from '../validation/loginSchema';
 import axios from 'axios';
+import UserDataContext from '../context/UserDataContext';
+import UserDataContextProvider from '../context/Provider';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const LoginForm = () => {
+  const { logIn, logOut } = useContext(UserDataContext);
+  console.log(logIn)
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: { email: '', password: '' },
     validationSchema: {loginSchema},
@@ -16,10 +23,13 @@ const LoginForm = () => {
         await axios 
                 .post('/api/v1/login', { username: 'admin', password: 'admin' })
                 .then((response) => {
-                  localStorage.setItem('user', JSON.stringify(response.data));
+                  logIn(response.data);
+                  navigate('/');
         });
       } catch (error) {
-        throw new Error
+        if (error.isAxiosError && error.response.status === 401) {
+            throw new Error
+        }
       }
     }
   });
