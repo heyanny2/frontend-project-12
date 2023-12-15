@@ -5,8 +5,22 @@ import Login from './pages/Login.jsx';
 import NotFound from './pages/NotFound.jsx';
 import NavBar from './components/NavBar/NavBar';
 import UserDataContextProvider from './components/context/Provider';
+import i18next from "i18next";
 
-const App = () => {
+
+
+
+const App = async () => {
+  const defaultLanguage = 'ru';
+  const i18n = i18next.createInstance();
+
+  await i18nInstance.init({
+    lng: defaultLanguage,
+    debug: true,
+    resources,
+  });
+
+
   const LoginPage = () => {
     if (localStorage.getItem('user') !== null) {
       return <Navigate to="/" />
