@@ -12,17 +12,18 @@ import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const { logIn, logOut } = useContext(UserDataContext);
-  console.log(logIn)
+  //console.log(logIn)
   const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: { email: '', password: '' },
-    validationSchema: {loginSchema},
+    validationSchema: loginSchema,
     onSubmit: async () => {
       try {
         await axios 
                 .post('/api/v1/login', { username: 'admin', password: 'admin' })
                 .then((response) => {
+                  console.log(response.data)
                   logIn(response.data);
                   navigate('/');
         });
@@ -40,13 +41,12 @@ const LoginForm = () => {
       <div className="form-floating mb-3">
         <Form.Control 
           name="username"
-          autocomplete="username"
+          autoComplete="username"
           required
           placeholder="Ваш ник"
           type="text"
           id="username"
           className="form-control"
-          value=""
           onChange={formik.handleChange}
         />
         <Form.Label htmlFor="username">Ваш ник</Form.Label>
@@ -54,13 +54,13 @@ const LoginForm = () => {
       <div className="form-floating mb-4">
         <Form.Control 
           name="password"
-          autocomplete="current-password"
+          autoComplete="current-password"
           required
           placeholder="Пароль"
           type="password"
           id="password"
           className="form-control"
-          value=""
+          onChange={formik.handleChange}
         />
         <Form.Label htmlFor="password" className="form-label">Пароль</Form.Label>
       </div>
