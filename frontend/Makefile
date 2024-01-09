@@ -6,3 +6,6 @@ install:
 
 start:
 	npm run start
+
+build:
+	npm build
