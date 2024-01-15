@@ -9,27 +9,27 @@ import ChatPanel from "../components/chat/ChatPanel";
 const Home = () => {
 
     const currentUser = JSON.parse(localStorage.getItem('user'))
-    console.log(currentUser)
-    //const token = currentUser.token;
+    //console.log(currentUser)
+    const token = currentUser.token;
 
 
-    // axios.get('/api/v1/data', { headers: { Authorization: `Bearer ${token}` } }).then((response) => {
-    //     console.log(response);
-    // });
+    axios.get('/api/v1/data', { headers: { Authorization: `Bearer ${token}` } }).then((response) => {
+      console.log(response);
+    });
 
 
     const formik = useFormik({
-        initialValues: { message: " " },
-        onSubmit: {}
+      initialValues: { message: " " },
+      onSubmit: {}
     });
 
     return (
-        <div className="container h-100 my-4 overflow-hidden rounded shadow">
-            <div className="row h-100 bg-white flex-md-row">
-                <ChannelsPanel />
-                <ChatPanel />
-            </div>
-        </div>
+      <div className="container h-100 my-4 overflow-hidden rounded shadow">
+          <div className="row h-100 bg-white flex-md-row">
+            <ChannelsPanel />
+            <ChatPanel />
+          </div>
+      </div>
     );
 }
 

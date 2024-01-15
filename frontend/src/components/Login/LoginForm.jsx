@@ -24,12 +24,14 @@ const LoginForm = () => {
                 .post('/api/v1/login', { username: 'admin', password: 'admin' })
                 .then((response) => {
                   console.log(response.data)
-                  logIn(response.data);
+                  const log = logIn(response.data);
+                  console.log(log);
                   navigate('/');
         });
       } catch (error) {
         if (error.isAxiosError && error.response.status === 401) {
-            throw new Error
+          console.log('Неверные имя пользователя или пароль');
+            //throw new Error
         }
       }
     }
@@ -50,6 +52,13 @@ const LoginForm = () => {
           onChange={formik.handleChange}
         />
         <Form.Label htmlFor="username">Ваш ник</Form.Label>
+        <Form.Control.Feedback
+          type="invalid"
+          className="invalid-feedback"
+          tooltip={formik.errors.name && formik.touched.name}
+        >
+        Неверные имя пользователя или пароль
+        </Form.Control.Feedback>
       </div>
       <div className="form-floating mb-4">
         <Form.Control 
@@ -63,6 +72,12 @@ const LoginForm = () => {
           onChange={formik.handleChange}
         />
         <Form.Label htmlFor="password" className="form-label">Пароль</Form.Label>
+        <Form.Control.Feedback
+        type="invalid"
+        className="invalid-feedback"
+        tooltip={formik.errors.password && formik.touched.password}>
+        Неверные имя пользователя или пароль
+        </Form.Control.Feedback>
       </div>
       <Button title="Войти"/>
     </Form>
