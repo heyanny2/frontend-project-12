@@ -1,5 +1,6 @@
 import Form from "react-bootstrap/Form";
 import MessageForm from "./MessageForm";
+import './style.css'
 
 const ChatPanel = () => {
     return (

@@ -1,0 +1,43 @@
+.channels-title {
+  color: var(--grey-dark);
+}
+
+.add-channel-button:active {
+  border: none;
+  box-shadow: 2px 2px 5px 0 var(--green-middle);
+}
+.add-icon {
+  padding: 0;
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--green-dark);
+}
+.channel-button {
+  padding: 0.4rem 0.8rem;
+  background-color: var(--green-light);
+  color: var(--grey-middle);
+  border: none;
+}
+.channel-button:hover {
+  background-color: var(--green-middle);
+}
+.channel-button:active {
+  background-color: var(--green-dark);
+  color: var(--white-grey-light);
+}
+
+.channel-name {
+  color: var(--grey-dark);
+}
+
+.message-count {
+  color: var(--green-middle)
+}
+
+.add-message {
+  width: 20px;
+  height: 20px;
+
+  color: var(--green-dark);
+}

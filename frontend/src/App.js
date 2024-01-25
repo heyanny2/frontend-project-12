@@ -24,7 +24,13 @@ const App =  () => {
   //   debug: true,
   //   ru,
   // });
-
+  const ChatPage = () => {
+    if (localStorage.getItem('user') === null) {
+      return <Navigate to="/login" />
+    } else {
+      return <Home />
+    }
+  };
 
   const LoginPage = () => {
     if (localStorage.getItem('user') !== null) {
@@ -39,7 +45,7 @@ const App =  () => {
       <NavBar />
         <UserDataContextProvider>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<ChatPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
