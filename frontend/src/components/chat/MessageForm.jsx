@@ -14,12 +14,12 @@ const MessageForm = () => {
                 className="border-0 p-0 ps-2 form-control"
                 placeholder="Введите сообщение..."
             />
-        </div>
-    </Form>
     <button type="submit" className="btn btn-group-vertical" disabled>
-        <TbMessage className="add-message-icon"/>
+        <TbMessage className="add-icon"/>
         <span className="visually-hidden">Отправить</span>
     </button>
+    </div>
+    </Form>
 </div>
   )
 };
