@@ -2,17 +2,13 @@ import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import Form from 'react-bootstrap/Form';
 import Button from '../Button/Button';
-import loginSchema from '../validation/loginSchema';
+import loginSchema from '../../validation/loginSchema';
 import axios from 'axios';
-import UserDataContext from '../context/UserDataContext';
-import UserDataContextProvider from '../context/Provider';
+import UserDataContextProvider from '../../context/UserDataContextProvider';
 import { useNavigate } from 'react-router-dom';
 
-
-
 const LoginForm = () => {
-  const { logIn, logOut } = useContext(UserDataContext);
-  //console.log(logIn)
+  const { logIn, logOut } = useContext(UserDataContextProvider);
   const navigate = useNavigate();
 
   const formik = useFormik({
