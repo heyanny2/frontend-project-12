@@ -11,12 +11,12 @@ const MessageForm = () => {
   const { userData } = useContext(UserDataContext);
 
   const formik = useFormik({
-    initialValues: { message: "", username: userData.username },
+    initialValues: { text: "", username: userData.username },
     onSubmit: (values,  { resetForm }) => {
       const { message, username } = values;
       console.log(values)
       try {
-        addNewMessage(message, username);
+        addNewMessage(values);
         resetForm();
       } catch {
         console.log('error');
@@ -29,14 +29,13 @@ const MessageForm = () => {
     <Form noValidate onSubmit={formik.handleSubmit} className="py-1 border rounded-2">
         <div className="input-group has-validation">
             <Form.Control
-                id="message"
-                type="text"
-                name="message"
+                id="text"
+                name="text"
                 aria-label="Новое сообщение"
                 className="border-0 p-0 ps-2 form-control"
                 placeholder="Введите сообщение..."
                 onChange={formik.handleChange}
-                value={formik.values.message}
+                value={formik.values.text}
             />
     <button type="submit" className="btn btn-group-vertical">
         <TbMessage className="add-icon"/>

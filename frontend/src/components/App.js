@@ -4,7 +4,6 @@ import Home from '../pages/Home.jsx';
 import Login from '../pages/Login.jsx';
 import NotFound from '../pages/NotFound.jsx';
 import NavBar from './NavBar/NavBar';
-import UserDataContextProvider from '../context/UserDataContextProvider';
 
 const App = () =>{
     const ChatPage = () => {
@@ -25,14 +24,12 @@ const App = () =>{
 
   return (
     <BrowserRouter>
-        <NavBar />
-          <UserDataContextProvider>
-            <Routes>
-              <Route path="*" element={<NotFound />} />
-              <Route path="/" element={<ChatPage />}/>
-              <Route path="/login" element={<LoginPage />}/>
-            </Routes>
-          </UserDataContextProvider>
+      <NavBar />
+        <Routes>
+          <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<ChatPage />}/>
+          <Route path="/login" element={<LoginPage />}/>
+        </Routes>
     </BrowserRouter>
   );
 }

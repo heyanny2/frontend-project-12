@@ -1,17 +1,23 @@
 import {createContext, useState} from "react";
+import {useDispatch} from "react-redux";
+import {addMessage} from '../slices/messageSlice'
 
 export const SocketContext = createContext({});
 
 const SocketContextProvider = ({ socket, children }) => {
-    const [messages, setMessages] = useState([]);
-    const addNewMessage = async (message, username) => {
-        await socket.emit('newMessage', { message, username });
+    const dispatch = useDispatch();
+    const addNewMessage = async (message) => {
+        socket.on('newMessage', (message) => {
+            dispatch(addMessage(message));
+        });
+
+        await socket.emit('newMessage', { ...message });
     };
     const connectSocket = () => {
         socket.connect();
 
-        socket.on('newMessage', (payload) => {
-            setMessages([...messages, payload]);
+        socket.on('newMessage', (message) => {
+            dispatch(addMessage(message));
         });
     } 
 
@@ -21,7 +27,7 @@ const SocketContextProvider = ({ socket, children }) => {
     };
 
     return (
-        <SocketContext.Provider value={{ messages, addNewMessage }}>
+        <SocketContext.Provider value={{ addNewMessage }}>
             {children}
         </SocketContext.Provider>
     )

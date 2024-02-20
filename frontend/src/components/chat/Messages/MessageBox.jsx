@@ -1,13 +1,13 @@
 import Message from "../Message";
-import {useContext} from "react";
-import {SocketContext} from "../../../context/ChatContext";
+import {useSelector} from "react-redux";
+import {messagesSelector} from "../../../selectors/selectors";
 
 const MessageBox = () => {
-  const { messages } = useContext(SocketContext);
+  const messages = useSelector(messagesSelector.selectAll);
   console.log(messages)
   const mapped = messages.map((message) => {
     return (
-      <Message userName={message.username} message={message.message} key={1}/>
+      <Message message={message}/>
     )
   });
 

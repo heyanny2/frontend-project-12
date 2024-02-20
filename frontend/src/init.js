@@ -2,10 +2,11 @@ import i18next from "i18next";
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import ru from './locales/ru';
 import io from 'socket.io-client';
-import ChatContext from "./context/ChatContext";
+import SocketContextProvider from "./context/ChatContext";
 import store from "./slices";
 import {Provider} from "react-redux";
 import App from './components/App';
+import UserDataContextProvider from "./context/UserDataContextProvider";
 
 const init = async () => {
   const defaultLanguage = 'ru';
@@ -22,13 +23,15 @@ const init = async () => {
   const socket = io ("/");
 
   return (
-    <ChatContext socket={socket}>
-        <I18nextProvider i18n={i18n}>
-            <Provider store={store}>
-                <App />
-            </Provider>
-        </I18nextProvider>
-    </ChatContext>
+    <Provider store={store}>
+      <SocketContextProvider socket={socket}>
+        <UserDataContextProvider>
+          <I18nextProvider i18n={i18n}>
+            <App />
+          </I18nextProvider>
+        </UserDataContextProvider>
+      </SocketContextProvider>
+    </Provider>
   );  
 }
 
