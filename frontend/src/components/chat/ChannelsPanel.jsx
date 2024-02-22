@@ -1,12 +1,12 @@
 import {useSelector, useDispatch} from "react-redux";
 import { TbPlaylistAdd } from "react-icons/tb";
 import {channelsSelector} from '../../selectors/selectors'
-
 import './style.css'
 
 const ChannelsPanel = () => {
+
   const channels = useSelector(channelsSelector.selectAll);
-  console.log(channels)
+  console.log(channels);
 
   const mapped = channels.map((channel) => {
     return (

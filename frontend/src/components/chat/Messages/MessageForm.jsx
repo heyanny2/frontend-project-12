@@ -1,17 +1,17 @@
 import Form from "react-bootstrap/Form";
 import { TbMessage } from "react-icons/tb";
-import {SocketContext} from "../../../context/ChatContext";
+import {ChatContext} from "../../../context/ChatContext";
 import {useContext} from "react";
 import {useFormik} from "formik";
-import {UserDataContext} from "../../../context/UserDataContextProvider";
+import { useAuthorization, useChatApi } from "../../../hooks/hooks";
 
 const MessageForm = () => {
 
-  const { addNewMessage } = useContext(SocketContext);
-  const { userData } = useContext(UserDataContext);
+  const { addNewMessage } = useChatApi();
+  const { getUserName } = useAuthorization();
 
   const formik = useFormik({
-    initialValues: { text: "", username: userData.username },
+    initialValues: { text: "", username: getUserName },
     onSubmit: (values,  { resetForm }) => {
       const { message, username } = values;
       console.log(values)

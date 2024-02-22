@@ -4,11 +4,11 @@ import Form from 'react-bootstrap/Form';
 import Button from '../Button/Button';
 import loginSchema from '../../validation/loginSchema';
 import axios from 'axios';
-import UserDataContextProvider from '../../context/UserDataContextProvider';
 import { useNavigate } from 'react-router-dom';
+import { useAuthorization } from '../../hooks/hooks';
 
 const LoginForm = () => {
-  const { logIn, logOut } = useContext(UserDataContextProvider);
+  const { logIn } = useAuthorization();
   const navigate = useNavigate();
 
   const formik = useFormik({

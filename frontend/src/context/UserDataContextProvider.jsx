@@ -10,16 +10,19 @@ const UserDataContextProvider = ({ children }) => {
 
     const logIn = (data) => {
         localStorage.setItem('user', JSON.stringify(data));
-        setUserData(data)
+        setUserData(data);
     }
 
     const logOut = () => {
         localStorage.removeItem('user')
-        setUserData(null)
+        setUserData(null);
     }
 
+    const getUserName = () => userData.username;
+    const getUserToken = () => userData.token;
+
     return (
-        <UserDataContext.Provider value={{ userData, logIn, logOut }}>
+        <UserDataContext.Provider value={{ userData, logIn, logOut, getUserName, getUserToken }}>
             {children}
         </UserDataContext.Provider>
     )
