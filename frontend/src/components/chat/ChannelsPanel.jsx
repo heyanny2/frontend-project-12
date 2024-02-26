@@ -1,23 +1,17 @@
 import {useSelector, useDispatch} from "react-redux";
 import { TbPlaylistAdd } from "react-icons/tb";
 import {channelsSelector} from '../../selectors/selectors'
+import { setCurrentChannel } from "../../slices/channelSlice";
 import './style.css'
+import Channel from "./Channel";
 
 const ChannelsPanel = () => {
-
   const channels = useSelector(channelsSelector.selectAll);
-  console.log(channels);
+  const dispatch = useDispatch();
 
-  const mapped = channels.map((channel) => {
-    return (
-      <li className="nav-item w-100" key={channel.id}>
-        <button type="button" className="w-100 rounded-0 text-start channel-button">
-          <span className="me-1">#</span>
-          {channel.name}
-        </button>
-      </li>
-    )
-  })
+  const handleSetCurrentChannel = (id) => {
+    dispatch(setCurrentChannel(id));
+  }
 
   return (
     <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
@@ -29,7 +23,7 @@ const ChannelsPanel = () => {
             </button>
         </div>
         <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
-          {mapped}
+        {channels.map((channel) => <Channel channel={channel} onClick={() => handleSetCurrentChannel(channel.id)} />)}
         </ul>
     </div>
   )
