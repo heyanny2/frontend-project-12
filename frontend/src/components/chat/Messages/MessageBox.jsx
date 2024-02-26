@@ -1,20 +1,19 @@
 import Message from "../Message";
 import {useSelector} from "react-redux";
-import {messagesSelector} from "../../../selectors/selectors";
+import {messagesSelector, currentChannelSelector} from "../../../selectors/selectors";
 
 const MessageBox = () => {
   const messages = useSelector(messagesSelector.selectAll);
-  const mapped = messages.map((message) => {
-    return (
-      <Message message={message}/>
-    )
-  });
+  const currentChannel = useSelector(currentChannelSelector);
 
-    return (
-      <div id="messages-box" className="chat-messages overflow-auto px-5">
-          {mapped}
-      </div>
-    )
+  const currentChannelMessages = messages.filter((message) => message.сhannelId === currentChannel.id ?? null);
+
+
+  return (
+    <div id="messages-box" className="chat-messages overflow-auto px-5">
+      {currentChannelMessages.map((message) => <Message message={message} key={message.id} />)}
+    </div>
+  )
 };
 
 export default MessageBox;

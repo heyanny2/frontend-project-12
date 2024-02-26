@@ -1,7 +1,8 @@
 import {useSelector, useDispatch} from "react-redux";
 import { TbPlaylistAdd } from "react-icons/tb";
-import {channelsSelector} from '../../selectors/selectors'
+import {channelsSelector, modalWindowSelector} from '../../selectors/selectors'
 import { setCurrentChannel } from "../../slices/channelSlice";
+import { openModalWindow } from "../../slices/modalWindowSlice";
 import './style.css'
 import Channel from "./Channel";
 
@@ -11,13 +12,17 @@ const ChannelsPanel = () => {
 
   const handleSetCurrentChannel = (id) => {
     dispatch(setCurrentChannel(id));
-  }
+  };
+
+  const handleCreateNewChannel = () => {
+    dispatch(openModalWindow());
+  };
 
   return (
     <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
         <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
             <b className="channels-title">Каналы</b>
-            <button type="button" className="p-0 text-primary btn btn-group-vertical">
+            <button type="button" className="p-0 btn-link btn btn-group-vertical add-channel-button" data-toggle="modal" onClick={handleCreateNewChannel}>
               <TbPlaylistAdd className="add-icon"/>
               <span className="visually-hidden">+</span>
             </button>

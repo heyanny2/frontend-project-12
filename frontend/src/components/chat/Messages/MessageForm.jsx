@@ -1,7 +1,7 @@
 import Form from "react-bootstrap/Form";
 import { TbMessage } from "react-icons/tb";
-import {ChatContext} from "../../../context/ChatContext";
-import {useContext} from "react";
+import { useSelector } from "react-redux";
+import {currentChannelSelector} from "../../../selectors/selectors"
 import {useFormik} from "formik";
 import { useAuthorization, useChatApi } from "../../../hooks/hooks";
 
@@ -9,6 +9,7 @@ const MessageForm = () => {
 
   const { addNewMessage } = useChatApi();
   const { getUserName } = useAuthorization();
+  const currentChannel = useSelector(currentChannelSelector);
 
   const formik = useFormik({
     initialValues: { text: "", username: getUserName },
@@ -16,7 +17,11 @@ const MessageForm = () => {
       const { message, username } = values;
       console.log(values)
       try {
-        addNewMessage(values);
+        const message = {
+          ...values,
+          сhannelId: currentChannel.id ?? null,
+        }
+        addNewMessage(message);
         resetForm();
       } catch {
         console.log('error');
@@ -37,7 +42,7 @@ const MessageForm = () => {
                 onChange={formik.handleChange}
                 value={formik.values.text}
             />
-    <button type="submit" className="btn btn-group-vertical">
+    <button type="button" className="p-0 btn btn-link btn-group-vertical add-message-button">
         <TbMessage className="add-icon"/>
         <span className="visually-hidden">Отправить</span>
     </button>
