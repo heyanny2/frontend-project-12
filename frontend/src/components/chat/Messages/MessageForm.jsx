@@ -4,12 +4,15 @@ import { useSelector } from "react-redux";
 import {currentChannelSelector} from "../../../selectors/selectors"
 import {useFormik} from "formik";
 import { useAuthorization, useChatApi } from "../../../hooks/hooks";
+import { useTranslation } from "react-i18next";
+
 
 const MessageForm = () => {
 
   const { addNewMessage } = useChatApi();
   const { getUserName } = useAuthorization();
   const currentChannel = useSelector(currentChannelSelector);
+  const { t } = useTranslation(); 
 
   const formik = useFormik({
     initialValues: { text: "", username: getUserName },
@@ -36,15 +39,15 @@ const MessageForm = () => {
             <Form.Control
                 id="text"
                 name="text"
-                aria-label="Новое сообщение"
+                aria-label={t('message.newMessage')}
                 className="border-0 p-0 ps-2 form-control"
-                placeholder="Введите сообщение..."
+                placeholder={t('message.messageInput')}
                 onChange={formik.handleChange}
                 value={formik.values.text}
             />
     <button type="button" className="p-0 btn btn-link btn-group-vertical add-message-button">
         <TbMessage className="add-icon"/>
-        <span className="visually-hidden">Отправить</span>
+        <span className="visually-hidden">{t('message.sendMessage')}</span>
     </button>
     </div>
     </Form>

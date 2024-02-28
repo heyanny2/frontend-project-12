@@ -14,7 +14,7 @@ const UserDataContextProvider = ({ children }) => {
     }
 
     const logOut = () => {
-        localStorage.removeItem('user')
+        localStorage.removeItem('user');
         setUserData(null);
     }
 

@@ -13,6 +13,11 @@
   height: 20px;
   color: var(--green-dark);
 }
+
+.channel {
+  display: flex;
+}
+
 .channel-button {
   padding: 0.4rem 0.8rem;
   background-color: var(--green-light);
@@ -25,6 +30,12 @@
 .channel-button:active {
   background-color: var(--green-dark);
   color: var(--white-grey-light);
+}
+
+.channel-menu-btn {
+  border: none;
+  background-color: var(--green-light);
+  color: var(--grey-light)
 }
 
 .channel-name {
@@ -41,3 +52,14 @@
 
   color: var(--green-dark);
 }
+
+
+/* .dropdown-menu {
+  display: block;
+  position: absolute;
+  transform: translate3d(0px, 40px, 0px);
+}
+
+.dropdown-item {
+  display: flex;
+} */

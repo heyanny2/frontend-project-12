@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
 import "./style.css";
-
-
+import { useTranslation } from "react-i18next";
 
 const NavBar = () => {
+  const { t } = useTranslation();
 
   const LogoutButton = (title) => {
     return (
@@ -17,7 +17,7 @@ const NavBar = () => {
         <NavLink className="navbar-brand" to="/">
           Hexlet Chat
         </NavLink>
-        {LogoutButton("Выйти")}
+        {LogoutButton(t('navigation.exitBtn'))}
       </div>
     </nav>
   )

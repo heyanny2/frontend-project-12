@@ -4,6 +4,7 @@ import Home from '../pages/Home.jsx';
 import Login from '../pages/Login.jsx';
 import NotFound from '../pages/NotFound.jsx';
 import NavBar from './NavBar/NavBar';
+import Signup from '../pages/SignUp.jsx';
 
 const App = () =>{
     const ChatPage = () => {
@@ -29,6 +30,7 @@ const App = () =>{
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<ChatPage />}/>
           <Route path="/login" element={<LoginPage />}/>
+          <Route path="/signup" element={<Signup />}/>
         </Routes>
     </BrowserRouter>
   );

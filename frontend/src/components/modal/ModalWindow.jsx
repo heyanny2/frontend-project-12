@@ -5,11 +5,13 @@ import {useFormik} from "formik";
 import { useChatApi } from "../../hooks/hooks";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModalWindow } from "../../slices/modalWindowSlice";
+import { useTranslation } from "react-i18next";
 
 const ModalWindow = () => {
     const { addNewChannel } = useChatApi();
     const isModalWindowOpen = useSelector((state) => state.modalWindow.isOpen);
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
     const handleCloseModalWindow = () => {
       dispatch(closeModalWindow());
@@ -34,7 +36,7 @@ const ModalWindow = () => {
   return (
     <Modal show={isModalWindowOpen}>
       <div className="modal-header">
-        <div className="modal-title h4">Добавить канал</div>
+        <div className="modal-title h4">{t('modal.createChannel')}</div>
           <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseModalWindow}></button>
       </div>
       <div className="modal-body">
@@ -43,15 +45,15 @@ const ModalWindow = () => {
             <Form.Control
             id="name"
             name="name"
-            aria-label="Название нового канала"
+            aria-label={t('modal.newChannelName')}
             className="p-1 ps-2 form-control"
-            placeholder="Введите сообщение..."
+            placeholder={t('modal.channelNameInput')}
             onChange={formik.handleChange}
             value={formik.values.channelName}
             />
           </div>
-          <ModalButtton title={'Отменить'} priority={false} onClick={handleCloseModalWindow}/>
-          <ModalButtton title={'Отправить'} priority={true} onClick={formik.handleSubmit}/>
+          <ModalButtton title={t('modal.cancelBtn')} priority={false} onClick={handleCloseModalWindow}/>
+          <ModalButtton title={t('modal.sendBtn')} priority={true} onClick={formik.handleSubmit}/>
         </Form>
       </div>
     </Modal>

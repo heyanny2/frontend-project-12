@@ -1,10 +1,14 @@
 import {NavLink} from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+
 const LoginFooter = ({ title }) => {
+  const { t } = useTranslation();
+
   return(
     <div className="card-footer p-4">
       <div className="text-center">
-        <span>Нет аккаунта? </span> 
-        <NavLink to="/">Регистрация</NavLink>
+        <span>{t('login.noAccount')} </span> 
+        <NavLink to="/">{t('registration.registrationTitle')}</NavLink>
       </div>
     </div>
   )

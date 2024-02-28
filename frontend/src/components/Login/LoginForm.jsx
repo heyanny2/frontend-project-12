@@ -1,15 +1,17 @@
 import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import Form from 'react-bootstrap/Form';
-import Button from '../Button/Button';
+import Button from '../Button/LoginButton';
 import loginSchema from '../../validation/loginSchema';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuthorization } from '../../hooks/hooks';
+import { useTranslation } from 'react-i18next';
 
 const LoginForm = () => {
   const { logIn } = useAuthorization();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: { email: '', password: '' },
@@ -35,25 +37,25 @@ const LoginForm = () => {
 
   return ( 
     <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-      <h1 className="title text-center mb-4">Войти</h1>
+      <h1 className="title text-center mb-4">{t('login.loginTitle')}</h1>
       <div className="form-floating mb-3">
         <Form.Control 
           name="username"
           autoComplete="username"
           required
-          placeholder="Ваш ник"
+          placeholder={t('login.userName')}
           type="text"
           id="username"
           className="form-control"
           onChange={formik.handleChange}
         />
-        <Form.Label htmlFor="username">Ваш ник</Form.Label>
+        <Form.Label htmlFor="username">{t('login.userName')}</Form.Label>
         <Form.Control.Feedback
           type="invalid"
           className="invalid-feedback"
           tooltip={formik.errors.name && formik.touched.name}
         >
-        Неверные имя пользователя или пароль
+        {t('login.loginError')}
         </Form.Control.Feedback>
       </div>
       <div className="form-floating mb-4">
@@ -61,21 +63,21 @@ const LoginForm = () => {
           name="password"
           autoComplete="current-password"
           required
-          placeholder="Пароль"
+          placeholder={t('login.password')}
           type="password"
           id="password"
           className="form-control"
           onChange={formik.handleChange}
         />
-        <Form.Label htmlFor="password" className="form-label">Пароль</Form.Label>
+        <Form.Label htmlFor="password" className="form-label">{t('login.password')}</Form.Label>
         <Form.Control.Feedback
         type="invalid"
         className="invalid-feedback"
         tooltip={formik.errors.password && formik.touched.password}>
-        Неверные имя пользователя или пароль
+        {t('login.loginError')}
         </Form.Control.Feedback>
       </div>
-      <Button title="Войти"/>
+      <Button title={t('login.loginTitle')} />
     </Form>
   )
 };
