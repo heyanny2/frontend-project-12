@@ -4,6 +4,7 @@ const modalWindowAdapter = createEntityAdapter();
 const initialState = modalWindowAdapter.getInitialState({
     isOpen: false,
     type: null,
+    relevantChannel: null,
 });
 
 const modalWindowSlice = createSlice({
@@ -17,9 +18,15 @@ const modalWindowSlice = createSlice({
         closeModalWindow: (state, { payload }) => {
             state.isOpen = false;
         },
+        setCurrentModalType: (state, { payload }) => {
+            state.type = payload;
+        },
+        setRelevantChannel: (state, { payload }) => {
+            state.relevantChannel = payload;
+        },
     }
 });
 
-export const { openModalWindow, closeModalWindow } = modalWindowSlice.actions;
+export const { openModalWindow, closeModalWindow, setCurrentModalType, setRelevantChannel } = modalWindowSlice.actions;
 export { modalWindowAdapter };
 export default modalWindowSlice.reducer;

@@ -11,11 +11,17 @@ const channelSlice = createSlice({
     initialState,
     reducers: {
         addChannel: channelsAdapter.addOne,
-        addChannels: channelsAdapter.addMany,
         setCurrentChannel: (state, { payload }) => {
             state.currentChannelId = payload;
         },
-        deleteChannel: channelsAdapter.removeOne,
+        deleteChannel: (state, { payload }) => {
+            if (state.currentChannelId === payload) {
+                state.currentChannelId = defaultCurrentChannelId;
+            }
+
+            channelsAdapter.removeOne(state, payload)
+        },
+        renameChannel: channelsAdapter.updateOne,
     },
     extraReducers: (builder) => {
         builder.addCase(fetchInitialData.fulfilled, (state, { payload }) => {
@@ -24,6 +30,6 @@ const channelSlice = createSlice({
     },
 });
 
-export const { addChannel, addChannels, setCurrentChannel, deleteChannel } = channelSlice.actions;
+export const { addChannel, addChannels, setCurrentChannel, deleteChannel,renameChannel } = channelSlice.actions;
 export { channelsAdapter };
 export default channelSlice.reducer;
