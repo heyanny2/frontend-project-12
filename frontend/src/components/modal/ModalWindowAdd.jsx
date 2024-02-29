@@ -6,12 +6,16 @@ import { useChatApi } from "../../hooks/hooks";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModalWindow } from "../../slices/modalWindowSlice";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+import channelNameShema from "../../validation/channelNameSchema";
+import { useState } from "react";
 
 const ModalWindow = () => {
     const { addNewChannel } = useChatApi();
     const isModalWindowOpen = useSelector((state) => state.modalWindow.isOpen);
     const dispatch = useDispatch();
     const { t } = useTranslation();
+    const [isInvalidChannelName, setInvalidChannelName] = useState(false);
 
     const handleCloseModalWindow = () => {
       dispatch(closeModalWindow());
@@ -19,15 +23,21 @@ const ModalWindow = () => {
 
     const formik = useFormik({
         initialValues: { name: "" },
-        onSubmit: (values) => {
+        validationSchema: channelNameShema,
+        onSubmit: async (values) => {
             try {
+              setInvalidChannelName(false);
                 const channel = {
                     ...values,
                 }
-                addNewChannel(channel);
+                setInvalidChannelName(false);
+                await addNewChannel(values);
                 handleCloseModalWindow();
-            } catch {
+              } catch(error) {
+                console.log(error)
+                setInvalidChannelName(true);
                 console.log('error');
+                toast.error(t('toast.networkError'));
             }
         },
     });
@@ -40,18 +50,25 @@ const ModalWindow = () => {
           <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseModalWindow}></button>
       </div>
       <div className="modal-body">
-        <Form noValidate onSubmit={formik.handleSubmit} className="py-1 rounded-2">
+        <Form onSubmit={formik.handleSubmit} className="py-1 rounded-2">
           <div className="form-group">
             <Form.Control
             id="name"
+            type="text"
             name="name"
             aria-label={t('modal.newChannelName')}
             className="p-1 ps-2 form-control"
             placeholder={t('modal.channelNameInput')}
             onChange={formik.handleChange}
-            value={formik.values.channelName}
+            isInvalid={(formik.errors.name && formik.touched.name) || isInvalidChannelName}
             />
-          </div>
+          <Form.Label htmlFor="name" className="form-label visually-hidden">
+                        {t('login.password')}
+                        </Form.Label>
+          <Form.Control.Feedback type="invalid" className="invalid-feedback">
+                        От 3 до 20 символов
+                        </Form.Control.Feedback>
+                        </div>
           <div class="d-flex justify-content-end">
             <ModalButtton title={t('modal.cancelBtn')} priority={false} onClick={handleCloseModalWindow}/>
             <ModalButtton title={t('modal.sendBtn')} priority={true} onClick={formik.handleSubmit}/>

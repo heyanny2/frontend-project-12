@@ -5,6 +5,7 @@ import Login from '../pages/Login.jsx';
 import NotFound from '../pages/NotFound.jsx';
 import NavBar from './NavBar/NavBar';
 import Signup from '../pages/SignUp.jsx';
+import { ToastContainer } from 'react-toastify';
 
 const App = () =>{
     const ChatPage = () => {
@@ -32,6 +33,19 @@ const App = () =>{
           <Route path="/login" element={<LoginPage />}/>
           <Route path="/signup" element={<Signup />}/>
         </Routes>
+        <ToastContainer
+                        position="top-right"
+                        autoClose={2000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                        />
+        <ToastContainer />
     </BrowserRouter>
   );
 }

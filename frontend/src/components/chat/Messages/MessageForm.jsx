@@ -5,6 +5,7 @@ import {currentChannelSelector} from "../../../selectors/selectors"
 import {useFormik} from "formik";
 import { useAuthorization, useChatApi } from "../../../hooks/hooks";
 import { useTranslation } from "react-i18next";
+import leoProfanity from 'leo-profanity';
 
 
 const MessageForm = () => {
@@ -16,13 +17,12 @@ const MessageForm = () => {
 
   const formik = useFormik({
     initialValues: { text: "", username: getUserName },
-    onSubmit: (values,  { resetForm }) => {
-      const { message, username } = values;
-      console.log(values)
+    onSubmit: ({ text, username },  { resetForm }) => {
       try {
         const message = {
-          ...values,
-          сhannelId: currentChannel.id ?? null,
+          username,
+          text: leoProfanity.clean(text),
+          сhannelId: currentChannel.id,
         }
         addNewMessage(message);
         resetForm();
@@ -34,18 +34,18 @@ const MessageForm = () => {
 
   return (
     <div className="mt-auto px-5 py-3">
-    <Form noValidate onSubmit={formik.handleSubmit} className="py-1 border rounded-2">
+    <Form noValidate onSubmit={formik.handleSubmit} className="py-1 rounded-2">
         <div className="input-group has-validation">
             <Form.Control
                 id="text"
                 name="text"
                 aria-label={t('message.newMessage')}
-                className="border-0 p-0 ps-2 form-control"
+                className="p-2 ps-2 form-control"
                 placeholder={t('message.messageInput')}
                 onChange={formik.handleChange}
                 value={formik.values.text}
             />
-    <button type="button" className="p-0 btn btn-link btn-group-vertical add-message-button">
+    <button type="button" className="p-0 m-2 btn border-0 position-absolute end-0 me-2 add-button">
         <TbMessage className="add-icon"/>
         <span className="visually-hidden">{t('message.sendMessage')}</span>
     </button>

@@ -7,6 +7,7 @@ import {Provider} from "react-redux";
 import App from './components/App';
 import UserDataContextProvider from "./context/UserDataContextProvider";
 import resources from './locales/index.js';
+import LeoProfanity from 'leo-profanity';
 
 const defaultLanguage = 'ru';
 
@@ -25,6 +26,9 @@ const init = async () => {
   });
 
   const socket = io('/', { autoConnect: false });
+
+  const profanityFilter = LeoProfanity;
+  profanityFilter.add(profanityFilter.getDictionary(defaultLanguage));
 
   return (
     <Provider store={store}>

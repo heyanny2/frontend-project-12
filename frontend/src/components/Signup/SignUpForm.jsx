@@ -1,34 +1,40 @@
 import Form from 'react-bootstrap/Form';
 import React, {useState} from "react";
-import signupSchema from "../../validation/signUpSchema";
+import signupSchema from "../../validation/signupSchema";
 import {useNavigate} from "react-router-dom";
 import {useFormik} from "formik";
 import axios from "axios";
 import Title from "../Title/Title";
 import LoginButton from '../Button/LoginButton'
 import { useAuthorization } from '../../hooks/hooks';
+import { useTranslation } from 'react-i18next';
+import { toast } from "react-toastify";
 
 const SignupForm = () => {
   const { logIn } = useAuthorization();
   const navigate = useNavigate();
   const [isInvalidAuth, setInvalidAuth] = useState(false);
+  const { t } = useTranslation();
 
   const formik = useFormik({
-    initialValues: { name: "", password: "", passwordConfirmation: "" },
+    initialValues: { username: "", password: "", passwordConfirmation: "" },
     validationSchema: signupSchema,
-    onSubmit: async (values) => {
-      const { name, password } = values;
+    onSubmit: async (values) => {    
+      const { username, password } = values;
       try {
         setInvalidAuth(false);
         await axios
-          .post('/api/v1/signup', { username: name, password: password })
+          .post('/api/v1/signup', { username, password })
           .then((response) => {
             logIn(response.data);
             navigate('/');
           });
-      } catch(err) {
-        setInvalidAuth(true);
-        console.log(err);
+      } catch(error) {
+        if (error.isAxiosError && error.response.status === 409) {
+          setInvalidAuth(true);
+          return;
+        }
+        toast.error(t('toast.networkError'));
       }
     },
   });
@@ -37,18 +43,18 @@ const SignupForm = () => {
       <Title title="Регистрация"/>
         <div className="form-floating mb-3">
           <Form.Control
-          id="name"
+          id="username"
           type="text"
-          name="name"
+          name="username"
           className="form-control"
           placeholder="Ваш ник"
-          autoComplete="username"
+          username
           onChange={formik.handleChange}
           isInvalid={isInvalidAuth}
           isValid={!isInvalidAuth}
           required
           />
-          <Form.Label htmlFor="name" className="form-label">
+          <Form.Label htmlFor="username" className="form-label">
           Имя пользователя
           </Form.Label>
           <Form.Control.Feedback
@@ -65,7 +71,6 @@ const SignupForm = () => {
           name="password"
           className="form-control"
           placeholder="Пароль"
-          autoComplete="password"
           onChange={formik.handleChange}
           isInvalid={isInvalidAuth}
           required
@@ -90,7 +95,7 @@ const SignupForm = () => {
           isInvalid={isInvalidAuth}
           required
           />
-          <Form.Label htmlFor="password" className="form-label">
+          <Form.Label htmlFor="passwordConfirmation" className="form-label">
           Подтвердите пароль
           </Form.Label>
           <Form.Control.Feedback type="invalid" className="invalid-tooltip invalid-feedback"
