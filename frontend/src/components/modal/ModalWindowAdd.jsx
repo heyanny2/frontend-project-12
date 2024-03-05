@@ -1,5 +1,5 @@
 import { Modal } from "react-bootstrap";
-import ModalButtton from "../Button/ModalButton";
+import ModalButtton from "../Buttons/ModalButton";
 import Form from "react-bootstrap/Form";
 import {useFormik} from "formik";
 import { useChatApi } from "../../hooks/hooks";
@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import channelNameShema from "../../validation/channelNameSchema";
 import { useState } from "react";
+import { channelsNamesSelector } from "../../selectors/selectors";
 
 const ModalWindow = () => {
     const { addNewChannel } = useChatApi();
@@ -16,6 +17,7 @@ const ModalWindow = () => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const [isInvalidChannelName, setInvalidChannelName] = useState(false);
+    const channelsNames = useSelector(channelsNamesSelector);
 
     const handleCloseModalWindow = () => {
       dispatch(closeModalWindow());
@@ -23,7 +25,7 @@ const ModalWindow = () => {
 
     const formik = useFormik({
         initialValues: { name: "" },
-        validationSchema: channelNameShema,
+        validationSchema: channelNameShema(channelsNames),
         onSubmit: async (values) => {
             try {
               setInvalidChannelName(false);

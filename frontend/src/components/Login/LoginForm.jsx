@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import Form from 'react-bootstrap/Form';
-import Button from '../Button/LoginButton';
+import Button from '../Buttons/LoginButton';
 import loginSchema from '../../validation/loginSchema';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';

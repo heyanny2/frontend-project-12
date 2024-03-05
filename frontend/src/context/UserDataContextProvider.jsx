@@ -6,7 +6,6 @@ const UserDataContextProvider = ({ children }) => {
     const currentUser = JSON.parse(localStorage.getItem('user')) ?? null;
 
     const [userData, setUserData] = useState(currentUser);
-    //console.log(userData)
 
     const logIn = (data) => {
         localStorage.setItem('user', JSON.stringify(data));

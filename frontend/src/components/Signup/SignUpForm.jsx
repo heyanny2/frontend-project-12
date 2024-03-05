@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {useFormik} from "formik";
 import axios from "axios";
 import Title from "../Title/Title";
-import LoginButton from '../Button/LoginButton'
+import LoginButton from '../Buttons/LoginButton'
 import { useAuthorization } from '../../hooks/hooks';
 import { useTranslation } from 'react-i18next';
 import { toast } from "react-toastify";

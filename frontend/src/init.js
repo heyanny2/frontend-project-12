@@ -8,6 +8,7 @@ import App from './components/App';
 import UserDataContextProvider from "./context/UserDataContextProvider";
 import resources from './locales/index.js';
 import LeoProfanity from 'leo-profanity';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 
 const defaultLanguage = 'ru';
 
@@ -29,6 +30,15 @@ const init = async () => {
 
   const profanityFilter = LeoProfanity;
   profanityFilter.add(profanityFilter.getDictionary(defaultLanguage));
+
+  const rollbarConfig = {
+    accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
+    payload: {
+      environment: 'production',
+    },
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+  };
 
   return (
     <Provider store={store}>

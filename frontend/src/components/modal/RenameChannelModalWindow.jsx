@@ -1,5 +1,5 @@
 import { Modal } from "react-bootstrap";
-import ModalButtton from "../Button/ModalButton";
+import ModalButtton from "../Buttons/ModalButton";
 import Form from "react-bootstrap/Form";
 import {useFormik} from "formik";
 import { useChatApi } from "../../hooks/hooks";
@@ -24,9 +24,9 @@ const RenameChannelModalWindow = () => {
 
   const formik = useFormik({
     initialValues: { name: "" },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       try {
-        renameChannel({ id: relevantChannelId, name: values.name });
+        await renameChannel({ relevantChannelId, values.name });
         handleCloseModalWindow();
       } catch {
           console.log('error');

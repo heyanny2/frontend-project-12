@@ -1,7 +1,7 @@
 import {createContext} from "react";
 import {useDispatch} from "react-redux";
 import {addMessage} from '../slices/messageSlice'
-import {addChannel, deleteChannel, renameChannel} from "../slices/channelSlice";
+import {addChannel, setCurrentChannel, deleteChannel, renameChannel} from "../slices/channelSlice";
 import axios from "axios";
 import { useAuthorization } from "../hooks/hooks";
 
@@ -25,8 +25,8 @@ const ChatContextProvider = ({ socket, children }) => {
         socket.on('removeChannel', ({ id }) => {
             dispatch(deleteChannel(id));
         });
-        socket.on('renameChannel', ({ id, name } ) => {
-            dispatch(renameChannel({ id, changes: name }));
+        socket.on('renameChannel', ({ id, name }) => {
+            dispatch(renameChannel({ id, changes: { name } }));
         });
     };
 
@@ -42,9 +42,11 @@ const ChatContextProvider = ({ socket, children }) => {
     };
 
     const addNewChannel = async (channel) => {
-        await socket
-            .timeout(timeout)
-            .emit('newChannel', { ...channel });
+        const { data } = await socket
+                                .timeout(timeout)
+                                .emitWithAck('newChannel', { ...channel }); 
+        dispatch(addChannel(data));
+        dispatch(setCurrentChannel(data.id));
 
     };
 
@@ -54,10 +56,10 @@ const ChatContextProvider = ({ socket, children }) => {
             .emit('removeChannel', { id });
     };
 
-    const renameSelectedChannel = async (id, name) => {
+    const renameSelectedChannel = async (id, newName) => {
         await socket
             .timeout(timeout)
-            .emit('renameChannel', { id, name });
+            .emit('renameChannel', { id, name: newName });
     };
 
     

@@ -2,12 +2,12 @@ import './style.css'
 import cn from 'classnames';
 
 const ModalButtton = ({ title, priority, onClick } ) => {
-    const ModalButttonClasses = cn("btn btn-outline-light modal-button", {
+    const ModalButttonClasses = cn("w-40 modal-button", {
         'high': priority,
     })
 
     return (
-        <button type="button" className={ModalButttonClasses} onClick={onClick}>{title}</button>
+        <button type={priority ? 'submit' : 'button'} className={ModalButttonClasses} onClick={onClick}>{title}</button>
     );
 }
 

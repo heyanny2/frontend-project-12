@@ -1,5 +1,5 @@
 import { Modal } from "react-bootstrap";
-import ModalButtton from "../Button/ModalButton";
+import ModalButtton from "../Buttons/ModalButton";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModalWindow, setCurrentModalType, setRelevantChannel } from "../../slices/modalWindowSlice";
 import { useTranslation } from "react-i18next";
