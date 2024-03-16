@@ -5,5 +5,5 @@ import { modalWindowAdapter } from "../slices/modalWindowSlice";
 export const channelsSelector = channelsAdapter.getSelectors((state) => state.channels);
 export const messagesSelector = messagesAdapter.getSelectors((state) => state.messages);
 export const currentChannelSelector = (state) => channelsSelector.selectById(state, state.channels.currentChannelId);
-export const channelsNamesSelector = (state) => channelsSelector.selectAll(state).map((channel) => channel.name);
+export const channelsNames = (state) => channelsSelector.selectAll(state).map((channel) => channel.name);
 export const modalWindowSelector = modalWindowAdapter.getSelectors((state) => state.modalWindow);

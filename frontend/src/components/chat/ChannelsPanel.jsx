@@ -1,13 +1,13 @@
 import {useSelector, useDispatch} from "react-redux";
 import { TbPlaylistAdd } from "react-icons/tb";
-import {channelsSelector, modalWindowSelector} from '../../selectors/selectors'
+import {channelsSelector} from '../../selectors/selectors'
 import { setCurrentChannel } from "../../slices/channelSlice";
 import { openModalWindow, setCurrentModalType } from "../../slices/modalWindowSlice";
 import './style.css'
 import Channel from "./Channel";
 import { useTranslation } from "react-i18next";
 
-const ChannelsPanel = ({}) => {
+const ChannelsPanel = () => {
   const channels = useSelector(channelsSelector.selectAll);
   const dispatch = useDispatch();
   const { t } = useTranslation();

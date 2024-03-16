@@ -1,13 +1,17 @@
 import * as Yup from 'yup';
 
-const channelNameShema = (channelsNames) => Yup.object().shape({
+const channelNameShema = (
+  channelsNames,
+  channelNameLength,
+  requaredField,
+  uniqueNameError,) => Yup.object().shape({
     name: Yup
         .string()
         .trim()
-        .min(3, 'мин 3 симв')
-        .max(20, 'макс 20 симв')
-        .required('Обязательное поле')
-        .notOneOf(channelsNames),
+        .min(3, channelNameLength)
+        .max(20, channelNameLength)
+        .required(requaredField)
+        .notOneOf(channelsNames, uniqueNameError),
 });
 
 export default channelNameShema;

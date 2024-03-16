@@ -17,7 +17,7 @@ const MessageForm = () => {
 
   const formik = useFormik({
     initialValues: { text: "", username: getUserName },
-    onSubmit: ({ text, username },  { resetForm }) => {
+    onSubmit: ({ text, username }, { resetForm }) => {
       try {
         const message = {
           username,
@@ -34,25 +34,25 @@ const MessageForm = () => {
 
   return (
     <div className="mt-auto px-5 py-3">
-    <Form noValidate onSubmit={formik.handleSubmit} className="py-1 rounded-2">
-        <div className="input-group has-validation">
+      <Form noValidate onSubmit={formik.handleSubmit} className="py-1 rounded-2">
+          <div className="input-group has-validation">
             <Form.Control
-                id="text"
-                name="text"
-                aria-label={t('message.newMessage')}
-                className="p-2 ps-2 form-control"
-                placeholder={t('message.messageInput')}
-                onChange={formik.handleChange}
-                value={formik.values.text}
+              id="text"
+              name="text"
+              aria-label={t('message.newMessage')}
+              className="p-2 ps-2 form-control"
+              placeholder={t('message.messageInput')}
+              onChange={formik.handleChange}
+              value={formik.values.text}
             />
-    <button type="button" className="p-0 m-2 btn border-0 position-absolute end-0 me-2 add-button">
-        <TbMessage className="add-icon"/>
-        <span className="visually-hidden">{t('message.sendMessage')}</span>
-    </button>
-    </div>
+        <button type="button" className="p-0 m-2 btn border-0 position-absolute end-0 me-2 add-button">
+          <TbMessage className="add-icon"/>
+          <span className="visually-hidden">{t('message.sendMessage')}</span>
+        </button>
+      </div>
     </Form>
-</div>
-  )
+  </div>
+  );
 };
 
 export default MessageForm;

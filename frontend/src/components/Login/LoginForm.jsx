@@ -24,9 +24,7 @@ const LoginForm = () => {
         await axios 
                 .post('/api/v1/login', values)
                 .then((response) => {
-                  console.log(response.data)
-                  const log = logIn(response.data);
-                  console.log(log);
+                  logIn(response.data);
                   navigate('/');
         });
       } catch (error) {
@@ -46,39 +44,36 @@ const LoginForm = () => {
         <Form.Control 
           name="username"
           autoComplete="username"
-          required
           placeholder={t('login.userName')}
           type="text"
           id="username"
           className="form-control"
           onChange={formik.handleChange}
           isInvalid={isInvalidUserData}
+          required
         />
-        <Form.Label htmlFor="username">{t('login.userName')}</Form.Label>
-        <Form.Control.Feedback
-          type="invalid"
-          className="invalid-feedback"
-          tooltip={formik.errors.name && formik.touched.name}
-        >
-        {t('login.loginError')}
-        </Form.Control.Feedback>
+        <Form.Label htmlFor="username" className="form-label">
+          {t('login.userName')}
+        </Form.Label>
       </div>
       <div className="form-floating mb-4">
         <Form.Control 
           name="password"
           autoComplete="current-password"
-          required
           placeholder={t('login.password')}
           type="password"
           id="password"
           className="form-control"
           onChange={formik.handleChange}
           isInvalid={isInvalidUserData}
+          required
         />
-        <Form.Label htmlFor="password" className="form-label">{t('login.password')}</Form.Label>
+        <Form.Label htmlFor="password" className="form-label">
+          {t('login.password')}
+        </Form.Label>
         <Form.Control.Feedback
         type="invalid"
-        className="invalid-feedback"
+        className="invalid-tooltip invalid-feedback"
         tooltip={isInvalidUserData}>
         {t('login.loginError')}
         </Form.Control.Feedback>

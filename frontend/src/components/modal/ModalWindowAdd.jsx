@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import channelNameShema from "../../validation/channelNameSchema";
 import { useState } from "react";
-import { channelsNamesSelector } from "../../selectors/selectors";
+import { channelsNames } from "../../selectors/selectors";
 
 const ModalWindow = () => {
     const { addNewChannel } = useChatApi();
@@ -17,7 +17,7 @@ const ModalWindow = () => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const [isInvalidChannelName, setInvalidChannelName] = useState(false);
-    const channelsNames = useSelector(channelsNamesSelector);
+    const channelsNamesList = useSelector(channelsNames);
 
     const handleCloseModalWindow = () => {
       dispatch(closeModalWindow());
@@ -25,7 +25,7 @@ const ModalWindow = () => {
 
     const formik = useFormik({
         initialValues: { name: "" },
-        validationSchema: channelNameShema(channelsNames),
+        validationSchema: channelNameShema(channelsNamesList, t('modal.channelNameLength'), t('modal.requiredField'), t('modal.uniqueNameError')),
         onSubmit: async (values) => {
             try {
               setInvalidChannelName(false);
@@ -46,7 +46,7 @@ const ModalWindow = () => {
 
 
   return (
-    <Modal show={isModalWindowOpen} centered >
+    <Modal show={isModalWindowOpen}>
       <div className="modal-header">
         <div className="modal-title h4">{t('modal.createChannel')}</div>
           <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseModalWindow}></button>
@@ -64,13 +64,13 @@ const ModalWindow = () => {
             onChange={formik.handleChange}
             isInvalid={(formik.errors.name && formik.touched.name) || isInvalidChannelName}
             />
-          <Form.Label htmlFor="name" className="form-label visually-hidden">
-                        {t('login.password')}
-                        </Form.Label>
-          <Form.Control.Feedback type="invalid" className="invalid-feedback">
-                        От 3 до 20 символов
-                        </Form.Control.Feedback>
-                        </div>
+            <Form.Label htmlFor="name" className="form-label visually-hidden">
+              {t('modal.channelNameInput')}
+            </Form.Label>
+            <Form.Control.Feedback type="invalid" className="invalid-feedback">
+              {formik.errors.name}
+            </Form.Control.Feedback>
+          </div>
           <div class="d-flex justify-content-end">
             <ModalButtton title={t('modal.cancelBtn')} priority={false} onClick={handleCloseModalWindow}/>
             <ModalButtton title={t('modal.sendBtn')} priority={true} onClick={formik.handleSubmit}/>

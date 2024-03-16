@@ -47,40 +47,41 @@ const SignupForm = () => {
           type="text"
           name="username"
           className="form-control"
-          placeholder="Ваш ник"
-          username
-          onChange={formik.handleChange}
-          isInvalid={isInvalidAuth}
-          isValid={!isInvalidAuth}
+          placeholder={t('registration.userName')}
+          onChange={(e) => {
+            setInvalidAuth(false);
+            formik.handleChange(e);
+          }}
+          isInvalid={isInvalidAuth || (formik.touched.username && formik.errors.username)}
           required
           />
           <Form.Label htmlFor="username" className="form-label">
-          Имя пользователя
+          {t('registration.userName')}
           </Form.Label>
           <Form.Control.Feedback
           type="invalid"
           className="invalid-tooltip invalid-feedback"
           tooltip={isInvalidAuth}>
-          Неверные имя пользователя или пароль
+          {t('registration.userNameLength')}
           </Form.Control.Feedback>
         </div>
         <div className="form-floating mb-3">
           <Form.Control
           id="password"
-          type="text"
+          type="password"
           name="password"
           className="form-control"
-          placeholder="Пароль"
+          placeholder={t('registration.password')}
           onChange={formik.handleChange}
-          isInvalid={isInvalidAuth}
+          isInvalid={isInvalidAuth || (formik.touched.password && formik.errors.password)}
           required
           />
           <Form.Label htmlFor="password" className="form-label">
-          Пароль
+          {t('registration.password')}
           </Form.Label>
-                        <Form.Control.Feedback type="invalid" className="invalid-tooltip invalid-feedback"
+          <Form.Control.Feedback type="invalid" className="invalid-tooltip invalid-feedback"
           tooltip={isInvalidAuth}>
-          От 3 до 20 символов
+          {t('registration.passwordLength')}
           </Form.Control.Feedback>
         </div>
         <div className="form-floating mb-4">
@@ -89,21 +90,21 @@ const SignupForm = () => {
           type="password"
           name="passwordConfirmation"
           className="form-control"
-          placeholder="Не менее 6 символов"
-          autoComplete="passwordConfirmation"
+          placeholder={t('registration.passwordConfirmation')}
           onChange={formik.handleChange}
-          isInvalid={isInvalidAuth}
+          isInvalid={isInvalidAuth
+            || (formik.touched.passwordConfirmation && formik.errors.passwordConfirmation)}
           required
           />
           <Form.Label htmlFor="passwordConfirmation" className="form-label">
-          Подтвердите пароль
+          {t('registration.passwordConfirmation')}
           </Form.Label>
           <Form.Control.Feedback type="invalid" className="invalid-tooltip invalid-feedback"
             tooltip={isInvalidAuth}>
-          Пароли должны совпадать
+          {t('registration.passwordMatching')}
           </Form.Control.Feedback>
         </div>
-      <LoginButton title="Зарегистрироваться" />
+      <LoginButton title={t('registration.registrationBtn')} />
     </Form>
     );
 }

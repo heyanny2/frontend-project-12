@@ -6,14 +6,16 @@ import { useChatApi } from "../../hooks/hooks";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModalWindow, setCurrentModalType, setRelevantChannel } from "../../slices/modalWindowSlice";
 import { useTranslation } from "react-i18next";
-
+import { toast } from "react-toastify";
+import channelNameShema from "../../validation/channelNameSchema";
 
 const RenameChannelModalWindow = () => {
   const { renameChannel } = useChatApi();
-  const isModalWindowOpen = useSelector((state) => state.modalWindow.isOpen);
-  const relevantChannelId = useSelector((state) => state.modalWindow.relevantChannel);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  const isModalWindowOpen = useSelector((state) => state.modalWindow.isOpen);
+  const relevantChannelId = useSelector((state) => state.modalWindow.relevantChannel);
 
 
   const handleCloseModalWindow = () => {
@@ -24,18 +26,21 @@ const RenameChannelModalWindow = () => {
 
   const formik = useFormik({
     initialValues: { name: "" },
+    validationSchema: channelNameShema,
     onSubmit: async (values) => {
+      const { name } = values;
       try {
-        await renameChannel({ relevantChannelId, values.name });
+        await renameChannel({ relevantChannelId, name });
         handleCloseModalWindow();
+        toast.success(t('toast.channelRenaming'));
       } catch {
-          console.log('error');
+          toast.error(t('toast.networkError'));
       }
     },
   });
 
   return (
-    <Modal show={isModalWindowOpen} centered >
+    <Modal show={isModalWindowOpen}>
       <div className="modal-header">
         <div className="modal-title h4">{t('modal.renameChannel')}</div>
         <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseModalWindow}></button>

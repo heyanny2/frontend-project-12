@@ -9,12 +9,13 @@ import { useState } from "react";
 import { setCurrentModalType, setRelevantChannel } from "../../slices/modalWindowSlice";
 
 
-const Channel = ({ channel, onClick, isRemovable }) => {
+const Channel = ({ channel, onClick }) => {
   const currentChannel = useSelector(currentChannelSelector).id;
   const isActive = () => channel.id === currentChannel.id;
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [isBtnActive, setBtnActive] = useState(false);
+  const { id, name, removable } = channel;
 
   const menuClasses = cn("dropdown-menu", {
     'show': isBtnActive,
@@ -27,11 +28,11 @@ const Channel = ({ channel, onClick, isRemovable }) => {
 
   const channelClasses = cn("w-100 rounded-0 text-start channel-button", {
     'current': isActive(),
-  })
+  });
 
   const channelMenuBtnClasses = cn("flex-grow-0 dropdown-toggle dropdown-toggle-split channel-menu-btn", {
     'current': isActive(),
-  })
+  });
 
   const handleRenameChannel = () => {
     dispatch(setCurrentModalType('rename'));
@@ -43,7 +44,19 @@ const Channel = ({ channel, onClick, isRemovable }) => {
     dispatch(openModalWindow());
   };
 
-  if (isRemovable) {
+  if (!removable) {
+    return (
+      <li className="nav-item w-100 channel" key={channel.id}>
+          <div role="group" className="d-flex dropdown btn-group">
+              <button type="button" className={channelClasses} onClick={onClick}>
+                  <span className="me-1">#</span>
+                  {channel.name}
+              </button>
+          </div>    
+      </li>
+    );
+  }
+
   return (
     <li className="nav-item w-100 channel" key={channel.id}>
       <div role="group" className="d-flex dropdown btn-group">
@@ -60,19 +73,7 @@ const Channel = ({ channel, onClick, isRemovable }) => {
         </div>
       </div>
     </li>
-  )
-} else if(!isRemovable) {
-    return (
-        <li className="nav-item w-100 channel" key={channel.id}>
-            <div role="group" className="d-flex dropdown btn-group">
-                <button type="button" className={channelClasses} onClick={onClick}>
-                    <span className="me-1">#</span>
-                    {channel.name}
-                </button>
-            </div>    
-        </li>
-    )
-}
-}
+  );
+};
 
 export default Channel;
