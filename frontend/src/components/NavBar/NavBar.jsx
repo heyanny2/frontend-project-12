@@ -17,7 +17,7 @@ const NavBar = () => {
   const LogoutButton = (handle, title) => {
     if (localStorage.getItem('user') !== null) {
       return (
-          <button type="button" className="logout-button">{title}</button>
+        <button type="button" className="logout-button" onClick={handle}>{title}</button>
       )
     }
 

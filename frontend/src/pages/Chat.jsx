@@ -2,7 +2,7 @@ import ChannelsPanel from "../components/chat/ChannelsPanel";
 import ChatPanel from "../components/chat/ChatPanel";
 import { useChatApi } from "../hooks/hooks";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import fetchInitialData from "../context/InitialDataThunk";
 import ModalWindow from "../components/modal/ModalWindow";
 

@@ -20,38 +20,32 @@
   color: var(--grey-middle);
   border: none;
 }
-.channel-button:hover {
-  background-color: var(--green-middle);
-}
-.channel-button:active {
-  background-color: var(--green-dark);
-  color: var(--white-grey-light);
-}
 
-.channel-menu-btn {
+#dropdown-menu {
   border: none;
+  border-radius: 0%;
   background-color: var(--green-light);
   color: var(--grey-light)
 }
 
-.channel-name {
+.current-channel,
+#dropdown-menu.current-channel, 
+.channel-button:active {
+    background-color: var(--green-dark);
+    color: var(--white-grey-light);
+}
+
+.channel-button:hover, 
+#dropdown-menu:hover {
+    background-color: var(--green-middle);
+    color: var(--white-grey-light)
+}
+
+#dropdown-item:hover {
+  background-color: var(--white-grey-middle);
+}
+
+#dropdown-item:active {
+  background-color: var(--white-grey-dark);
   color: var(--grey-dark);
-}
-
-.message-count {
-  color: var(--green-middle)
-}
-
-.add-message {
-  width: 20px;
-  height: 20px;
-
-  color: var(--green-dark);
-}
-
-
-.show {
-  display: block;
-  position: absolute;
-  transform: translate3d(0px, 40px, 0px);
 }

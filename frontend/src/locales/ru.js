@@ -1,7 +1,7 @@
 const ru = {
     translation: {
         login: {
-            loginTittle: 'Войти',
+            loginTitle: 'Войти',
             userName: 'Ваш ник',
             password: 'Ваш пароль',
             loginButton: 'Войти',
@@ -16,7 +16,7 @@ const ru = {
             userNameLength: 'От 3 до 20 символов',
             passwordLength: 'Не менее 6 символов',
             passwordMatching: 'Пароли должны совпадать',
-            registrationButton: 'Зарегистрироваться',
+            registrationBtn: 'Зарегистрироваться',
         },
         channel: {
             channels: 'Каналы',
@@ -28,6 +28,8 @@ const ru = {
             removeChannel: 'Удалить',
             renameChannel: 'Переименовать',
             controlChannel: 'Управление каналом',
+            prefix: '#',
+            addBtn: '+',
         },
         message: {
             messagesCount: 'сообщений',

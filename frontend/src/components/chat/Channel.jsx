@@ -1,46 +1,38 @@
 import { useDispatch, useSelector } from "react-redux";
-import {currentChannelSelector} from "../../selectors/selectors"
+import {currentChannel} from "../../selectors/selectors"
 import './style.css'
 import cn from 'classnames';
-import { Link } from "react-router-dom";
 import { openModalWindow } from "../../slices/modalWindowSlice";
 import { useTranslation } from 'react-i18next';
-import { useState } from "react";
 import { setCurrentModalType, setRelevantChannel } from "../../slices/modalWindowSlice";
+import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
+import { ButtonGroup, Dropdown } from 'react-bootstrap';
 
 
 const Channel = ({ channel, onClick }) => {
-  const currentChannel = useSelector(currentChannelSelector).id;
-  const isActive = () => channel.id === currentChannel.id;
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [isBtnActive, setBtnActive] = useState(false);
   const { id, name, removable } = channel;
-
-  const menuClasses = cn("dropdown-menu", {
-    'show': isBtnActive,
-  });
-
-  const handleSetBtnActive = (id) => {
-    setBtnActive(!isBtnActive);
-    dispatch(setRelevantChannel(id));
-  }
+  const currentChannelData = useSelector(currentChannel);
+  const isActive = () => id === currentChannelData.id;
 
   const channelClasses = cn("w-100 rounded-0 text-start channel-button", {
-    'current': isActive(),
+    'current-channel': isActive(),
   });
 
-  const channelMenuBtnClasses = cn("flex-grow-0 dropdown-toggle dropdown-toggle-split channel-menu-btn", {
-    'current': isActive(),
+  const channelMenuBtnClasses = cn("flex-grow-0 dropdown-toggle-split channel-menu-btn", {
+    'current-channel': isActive(),
   });
 
-  const handleRenameChannel = () => {
+  const handleRenameChannel = (channelId) => {
     dispatch(setCurrentModalType('rename'));
+    dispatch(setRelevantChannel(channelId));
     dispatch(openModalWindow());
   };
 
-  const handleRemoveChannel = () => {
+  const handleRemoveChannel = (channelId) => {
     dispatch(setCurrentModalType('remove'));
+    dispatch(setRelevantChannel(channelId));
     dispatch(openModalWindow());
   };
 
@@ -59,19 +51,20 @@ const Channel = ({ channel, onClick }) => {
 
   return (
     <li className="nav-item w-100 channel" key={channel.id}>
-      <div role="group" className="d-flex dropdown btn-group">
+      <Dropdown className="d-flex dropdown btn-group" as={ButtonGroup}>
         <button type="button" className={channelClasses} onClick={onClick}>
           <span className="me-1">#</span>
           {channel.name}
         </button>
-        <button type="button" id="react-aria4736936024-3" aria-expanded="false" className={channelMenuBtnClasses} onClick={() => handleSetBtnActive(channel.id)}>
+        <DropdownToggle variant="channel-menu-btn" type="button" id="dropdown-menu" className={channelMenuBtnClasses}>
           <span className="visually-hidden">{t('channel.controlChannel')}</span>
-        </button>
-        <div x-placement="bottom-end" aria-labelledby="react-aria4736936024-3" className={menuClasses} data-popper-reference-hidden="false" data-popper-escaped="false" data-popper-placement="bottom-end">
-          <Link className="dropdown-item" role="button" href="#" onClick={handleRemoveChannel}>{t('channel.removeChannel')}</Link>
-          <Link className="dropdown-item" role="button" href="#" onClick={handleRenameChannel}>{t('channel.renameChannel')}</Link>
-        </div>
-      </div>
+        </DropdownToggle>
+        
+        <Dropdown.Menu>
+          <Dropdown.Item className="dropdown-item" onClick={() => handleRemoveChannel(id)}>{t('channel.removeChannel')}</Dropdown.Item>
+          <Dropdown.Item className="dropdown-item" onClick={() => handleRenameChannel(id)}>{t('channel.renameChannel')}</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
     </li>
   );
 };

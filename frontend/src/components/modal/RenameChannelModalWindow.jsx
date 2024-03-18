@@ -8,15 +8,18 @@ import { closeModalWindow, setCurrentModalType, setRelevantChannel } from "../..
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import channelNameShema from "../../validation/channelNameSchema";
+import { channelsSelector, channelsNames } from '../../selectors/selectors';
 
 const RenameChannelModalWindow = () => {
-  const { renameChannel } = useChatApi();
+  const { renameSelectedChannel } = useChatApi();
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const isModalWindowOpen = useSelector((state) => state.modalWindow.isOpen);
   const relevantChannelId = useSelector((state) => state.modalWindow.relevantChannel);
-
+  const channelsNamesList = useSelector(channelsNames);
+  const channels = useSelector(channelsSelector.selectAll);
+  const relevantChannelName = channels.find(({ id }) => id === relevantChannelId).name;
 
   const handleCloseModalWindow = () => {
     dispatch(closeModalWindow());
@@ -25,12 +28,12 @@ const RenameChannelModalWindow = () => {
   };
 
   const formik = useFormik({
-    initialValues: { name: "" },
-    validationSchema: channelNameShema,
+    initialValues: { name: relevantChannelName },
+    validationSchema: channelNameShema(channelsNamesList, t('modal.channelNameLength'), t('modal.requiredField'), t('modal.uniqueNameError')),
     onSubmit: async (values) => {
       const { name } = values;
       try {
-        await renameChannel({ relevantChannelId, name });
+        await renameSelectedChannel({ id: relevantChannelId, name });
         handleCloseModalWindow();
         toast.success(t('toast.channelRenaming'));
       } catch {
@@ -59,7 +62,7 @@ const RenameChannelModalWindow = () => {
               value={formik.values.channelName}
               />
             </div>
-            <div class="d-flex justify-content-end">
+            <div className="d-flex justify-content-end">
               <ModalButtton title={t('modal.cancelBtn')} priority={false} onClick={handleCloseModalWindow}/>
               <ModalButtton title={t('modal.sendBtn')} priority={true} onClick={formik.handleSubmit}/>
             </div>

@@ -71,7 +71,7 @@ const ModalWindow = () => {
               {formik.errors.name}
             </Form.Control.Feedback>
           </div>
-          <div class="d-flex justify-content-end">
+          <div className="d-flex justify-content-end">
             <ModalButtton title={t('modal.cancelBtn')} priority={false} onClick={handleCloseModalWindow}/>
             <ModalButtton title={t('modal.sendBtn')} priority={true} onClick={formik.handleSubmit}/>
           </div>

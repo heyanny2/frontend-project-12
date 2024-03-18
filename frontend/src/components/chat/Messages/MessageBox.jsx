@@ -1,16 +1,15 @@
 import Message from "../Message";
-import {useSelector} from "react-redux";
-import {messagesSelector, currentChannelSelector} from "../../../selectors/selectors";
+import { useEffect, useRef } from 'react';
 
-const MessageBox = () => {
-  const messages = useSelector(messagesSelector.selectAll);
-  const currentChannel = useSelector(currentChannelSelector);
+const MessageBox = ({ currentChannelMessages }) => {
+  const refMessages = useRef(null);
 
-  const currentChannelMessages = messages.filter((message) => message.сhannelId === currentChannel.id ?? null);
-
+  useEffect(() => {
+    refMessages.current?.lastElementChild?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }, [currentChannelMessages]);
 
   return (
-    <div id="messages-box" className="chat-messages overflow-auto px-5">
+    <div ref={refMessages} id="messages-box" className="chat-messages overflow-auto px-5">
       {currentChannelMessages.map((message) => <Message message={message} key={message.id} />)}
     </div>
   )

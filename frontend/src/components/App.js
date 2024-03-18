@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-//import './App.css';
-import Home from '../pages/Home.jsx';
+import Home from '../pages/Chat.jsx';
 import Login from '../pages/Login.jsx';
 import NotFound from '../pages/NotFound.jsx';
 import NavBar from './NavBar/NavBar';
@@ -34,18 +33,18 @@ const App = () =>{
           <Route path="/signup" element={<Signup />}/>
         </Routes>
         <ToastContainer
-                        position="top-right"
-                        autoClose={2000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                        theme="light"
-                        />
-        <ToastContainer />
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+      <ToastContainer />
     </BrowserRouter>
   );
 }
