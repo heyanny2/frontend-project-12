@@ -1,6 +1,6 @@
 import cn from 'classnames';
-import { useAuthorization } from '../../../hooks';
-import './style.css';
+import { useAuthorization } from '../../../hooks/hooks';
+//import './style.css';
 
 const Message = ({ message }) => {
   const { getUserName } = useAuthorization();

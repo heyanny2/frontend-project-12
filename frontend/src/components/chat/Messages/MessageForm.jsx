@@ -1,4 +1,4 @@
-import Form from "react-bootstrap/Form";
+import { Button, Form, InputGroup } from "react-bootstrap";
 import { TbMessage } from "react-icons/tb";
 import { useSelector } from "react-redux";
 import {currentChannel} from "../../../selectors/selectors"
@@ -9,18 +9,15 @@ import leoProfanity from 'leo-profanity';
 import { useEffect, useRef } from 'react';
 import messageSchema from "../../../validation/messageSchema";
 import { toast } from "react-toastify";
+import { useRollbar } from '@rollbar/react';
 
 const MessageForm = () => {
-
+  const { t } = useTranslation();
+  const rollbar = useRollbar();
   const { addNewMessage } = useChatApi();
   const { getUserName } = useAuthorization();
   const currentChannelData = useSelector(currentChannel);
-  const { t } = useTranslation(); 
   const refInput = useRef(null);
-
-  useEffect(() => {
-    refInput?.current?.focus();
-  }, [currentChannelData?.id]);
 
   const formik = useFormik({
     initialValues: { text: '', username: getUserName() },
@@ -41,25 +38,30 @@ const MessageForm = () => {
     },
   });
 
+  useEffect(() => {
+    refInput?.current?.focus();
+  }, [currentChannelData?.id]);
+
   return (
     <div className="mt-auto px-5 py-3">
-      <Form onSubmit={formik.handleSubmit} className="py-1 rounded-2">
-          <div className="input-group has-validation">
-            <Form.Control
-              ref={refInput}
-              id="text"
-              name="text"
-              aria-label={t('message.newMessage')}
-              className="p-2 ps-2 form-control"
-              placeholder={t('message.messageInput')}
-              onChange={formik.handleChange}
-              value={formik.values.text}
-            />
-        <button type="submit" disabled={formik.isSubmitting} className="p-0 m-2 btn border-0 position-absolute end-0 me-2 add-button">
+      <Form noValidate onSubmit={formik.handleSubmit} className="py-1 rounded-2">
+        <InputGroup hasValidation={!formik.dirty || !formik.isValid}>
+          <Form.Control
+            ref={refInput}
+            id="text"
+            name="text"
+            aria-label={t('message.newMessage')}
+            className="p-2 ps-2 form-control"
+            placeholder={t('message.messageInput')}
+            onChange={formik.handleChange}
+            value={formik.values.text}
+            disabled={formik.isSubmitting}
+          />
+        <Button variant="group-vertical" type="submit" disabled={!formik.dirty || !formik.isValid}>
           <TbMessage className="add-icon"/>
           <span className="visually-hidden">{t('message.sendMessage')}</span>
-        </button>
-      </div>
+        </Button>
+      </InputGroup>
     </Form>
   </div>
   );

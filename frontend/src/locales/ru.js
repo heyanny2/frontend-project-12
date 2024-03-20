@@ -32,10 +32,13 @@ const ru = {
             addBtn: '+',
         },
         message: {
-            messagesCount: 'сообщений',
+            messagesCount_one: '{{count}} сообщение',
+            messagesCount_few: '{{count}} сообщения',
+            messagesCount_many: '{{count}} сообщений',
             newMessage: 'Новое сообщение',
             messageInput: 'Введите сообщение...',
             sendMessage: 'Отправить',
+            requiredField: 'Обязательное поле',
         },
         navigation: {
             chatName: 'Hexlet Chat',
@@ -61,6 +64,11 @@ const ru = {
             channelRemoval: 'Канал удалён',
             networkError: 'Ошибка соединения',
             authError: 'Ошибка авторизации',
+        },
+        notFound: {
+            pageNotFound: 'Страница не найдена',
+            youCanGo: 'Но вы можете перейти',
+            toMainPage: 'на главную страницу',
         },
     },
 };

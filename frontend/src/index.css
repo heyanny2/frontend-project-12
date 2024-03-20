@@ -35,8 +35,42 @@ code {
   background: var(--white-grey-light);
 }
 
+.card {
+  background-color: var(--white);
+}
+
 .card-img {
   width: 270px;
   height: 270px;
   margin-right: 10px;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: row;
+}
+
+.title {
+  color: var(--green-dark);
+  font-weight: bold;
+}
+
+.link {
+  color: var(--green-dark)
+}
+
+.form-floating {
+  color: var(--grey-dark);
+}
+
+.form-control:focus {
+  border-color: var(--green-light);
+  box-shadow: 2px 2px 5px 0 var(--green-middle);
+}
+
+.btn-danger {
+  padding: 5px 8px;
+  margin: 15px 5px 0;
+
+  border-radius: 5px;
 }
