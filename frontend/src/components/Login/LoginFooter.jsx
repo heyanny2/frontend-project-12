@@ -8,10 +8,12 @@ const LoginFooter = ({ title }) => {
     <div className="card-footer p-4">
       <div className="text-center">
         <span>{t('login.noAccount')} </span> 
-        <NavLink to="/signup" className="link">{t('registration.registrationTitle')}</NavLink>
+        <NavLink to="/signup" className="link">
+          {t('registration.registrationTitle')}
+        </NavLink>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default LoginFooter;

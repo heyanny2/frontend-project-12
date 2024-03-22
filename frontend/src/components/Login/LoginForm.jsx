@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthorization } from '../../hooks/hooks';
 import { useTranslation } from 'react-i18next';
 import { toast } from "react-toastify";
+import { appRoutes } from '../../routes';
 
 const LoginForm = () => {
   const { logIn } = useAuthorization();
@@ -17,21 +18,18 @@ const LoginForm = () => {
 
   const formik = useFormik({
     initialValues: { email: '', password: '' },
-    validationSchema: loginSchema,
+    validationSchema: loginSchema(t('login.requiredField')),
     onSubmit: async (values) => {
       try {
         setInvalidUserData(false);
-        await axios 
-                .post('/api/v1/login', values)
-                .then((response) => {
-                  logIn(response.data);
-                  navigate('/');
-        });
+        const data = await axios.post('/api/v1/login', values);
+        logIn(data);
+        navigate(appRoutes.chatPagePath());
       } catch (error) {
         if (error.isAxiosError && error.response.status === 401) {
           setInvalidUserData(true);
-            } else {
-                toast.error(t('toast.networkError'));
+        } else {
+          toast.error(t('toast.networkError'));
         }
       }
     }
@@ -75,12 +73,12 @@ const LoginForm = () => {
         type="invalid"
         className="invalid-tooltip invalid-feedback"
         tooltip={isInvalidUserData}>
-        {t('login.loginError')}
+          {t('login.loginError')}
         </Form.Control.Feedback>
       </div>
       <Button title={t('login.loginTitle')} />
     </Form>
-  )
+  );
 };
 
 export default LoginForm;

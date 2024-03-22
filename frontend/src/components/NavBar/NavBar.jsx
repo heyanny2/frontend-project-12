@@ -3,24 +3,22 @@ import "./style.css";
 import { useTranslation } from "react-i18next";
 import { useAuthorization } from '../../hooks/hooks';
 import { appRoutes } from '../../routes/index';
+import { Button } from 'react-bootstrap';
 
 const NavBar = () => {
   const { t } = useTranslation();
-  const { logOut } = useAuthorization();
+  const auth = useAuthorization();  
   const navigate = useNavigate();
 
   const handleLogout = () => {
     navigate(appRoutes.loginPagePath());
-    logOut();
+    auth.logOut();
   };
 
-  const LogoutButton = (handle, title) => {
-    if (localStorage.getItem('user') !== null) {
-      return (
-        <button type="button" className="logout-button" onClick={handle}>{title}</button>
-      )
+  const LogoutButton = (title) => {
+    if (auth.userData) { 
+      return <Button className="logout-button" onClick={handleLogout}>{title}</Button>;
     }
-
     return null;
   };
 
@@ -30,10 +28,10 @@ const NavBar = () => {
         <NavLink to={appRoutes.chatPagePath()} className="navbar-brand">
         {t('navigation.chatName')}
         </NavLink>
-        {LogoutButton(handleLogout, t('navigation.exitBtn'))}
+        {LogoutButton(t('navigation.exitBtn'))}
       </div>
     </nav>
-  )
-}
+  );
+};
 
 export default NavBar;

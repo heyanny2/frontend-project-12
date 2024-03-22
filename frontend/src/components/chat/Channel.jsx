@@ -2,9 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {currentChannel} from "../../selectors/selectors"
 import './style.css'
 import cn from 'classnames';
-import { openModalWindow } from "../../slices/modalWindowSlice";
 import { useTranslation } from 'react-i18next';
-import { setCurrentModalType, setRelevantChannel } from "../../slices/modalWindowSlice";
+import { openModalWindow } from "../../slices/modalWindowSlice";
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import { ButtonGroup, Dropdown } from 'react-bootstrap';
 
@@ -25,26 +24,22 @@ const Channel = ({ channel, onClick }) => {
   });
 
   const handleRenameChannel = (channelId) => {
-    dispatch(setCurrentModalType('rename'));
-    dispatch(setRelevantChannel(channelId));
-    dispatch(openModalWindow());
+    dispatch(openModalWindow({ type: 'rename', relevantChannel: channelId }));
   };
 
   const handleRemoveChannel = (channelId) => {
-    dispatch(setCurrentModalType('remove'));
-    dispatch(setRelevantChannel(channelId));
-    dispatch(openModalWindow());
+    dispatch(openModalWindow({ type: 'remove', relevantChannel: channelId }));
   };
 
   if (!removable) {
     return (
       <li className="nav-item w-100 channel" key={channel.id}>
-          <div role="group" className="d-flex dropdown btn-group">
-              <button type="button" className={channelClasses} onClick={onClick}>
-                  <span className="me-1">#</span>
-                  {channel.name}
-              </button>
-          </div>    
+        <div role="group" className="d-flex dropdown btn-group">
+          <button type="button" className={channelClasses} onClick={onClick}>
+            <span className="me-1">{t('channel.prefix')}</span>
+            {name}
+          </button>
+        </div>    
       </li>
     );
   }
@@ -53,16 +48,31 @@ const Channel = ({ channel, onClick }) => {
     <li className="nav-item w-100 channel" key={channel.id}>
       <Dropdown className="d-flex dropdown btn-group" as={ButtonGroup}>
         <button type="button" className={channelClasses} onClick={onClick}>
-          <span className="me-1">#</span>
-          {channel.name}
+          <span className="me-1">{t('channel.prefix')}</span>
+          {name}
         </button>
-        <DropdownToggle variant="channel-menu-btn" type="button" id="dropdown-menu" className={channelMenuBtnClasses}>
-          <span className="visually-hidden">{t('channel.controlChannel')}</span>
+        <DropdownToggle
+          variant="channel-menu-btn"
+          type="button"
+          id="dropdown-menu"
+          className={channelMenuBtnClasses}
+        >
+        <span className="visually-hidden">{t('channel.controlChannel')}</span>
         </DropdownToggle>
         
         <Dropdown.Menu>
-          <Dropdown.Item className="dropdown-item" onClick={() => handleRemoveChannel(id)}>{t('channel.removeChannel')}</Dropdown.Item>
-          <Dropdown.Item className="dropdown-item" onClick={() => handleRenameChannel(id)}>{t('channel.renameChannel')}</Dropdown.Item>
+          <Dropdown.Item
+            className="dropdown-item"
+            onClick={() => handleRemoveChannel(id)}
+          >
+            {t('channel.removeChannel')}
+          </Dropdown.Item>
+          <Dropdown.Item
+            className="dropdown-item"
+            onClick={() => handleRenameChannel(id)}
+          >
+            {t('channel.renameChannel')}
+          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </li>

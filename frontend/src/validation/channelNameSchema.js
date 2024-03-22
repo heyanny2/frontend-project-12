@@ -6,12 +6,13 @@ const channelNameShema = (
   requiredField,
   uniqueNameError,) => Yup.object().shape({
     name: Yup
-        .string()
-        .trim()
-        .min(3, channelNameLength)
-        .max(20, channelNameLength)
-        .required(requiredField)
-        .notOneOf(channelsNames, uniqueNameError),
-});
+      .string()
+      .trim()
+      .min(3, channelNameLength)
+      .max(20, channelNameLength)
+      .required(requiredField)
+      .notOneOf(channelsNames, uniqueNameError),
+  }
+);
 
 export default channelNameShema;

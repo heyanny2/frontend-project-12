@@ -4,9 +4,9 @@ import messageReducer from './messageSlice';
 import modalWindowReducer from './modalWindowSlice';
 
 export default configureStore({
-    reducer: {
-        channels: channelReducer,
-        messages: messageReducer,
-        modalWindow: modalWindowReducer,
+  reducer: {
+      channels: channelReducer,
+      messages: messageReducer,
+      modalWindow: modalWindowReducer,
     }
 });

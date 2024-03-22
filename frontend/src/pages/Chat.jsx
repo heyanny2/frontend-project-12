@@ -37,7 +37,7 @@ const Home = () => {
           <div className="col p-0 h-100">
           <div className="d-flex flex-column h-100">
             <ChatPanel 
-              //currentChannelName={currentChannelName}
+              currentChannelName={currentChannelName}
               currentChannelMessagesCount={currentChannelMessagesCount}
             />
             <MessageBox currentChannelMessages={currentChannelMessages} />

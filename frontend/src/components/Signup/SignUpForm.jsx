@@ -4,11 +4,11 @@ import signupSchema from "../../validation/signupSchema";
 import {useNavigate} from "react-router-dom";
 import {useFormik} from "formik";
 import axios from "axios";
-import Title from "../Title/Title";
 import LoginButton from '../Buttons/LoginButton'
 import { useAuthorization } from '../../hooks/hooks';
 import { useTranslation } from 'react-i18next';
 import { toast } from "react-toastify";
+import { appRoutes } from '../../routes/index';
 
 const SignupForm = () => {
   const { logIn } = useAuthorization();
@@ -18,18 +18,22 @@ const SignupForm = () => {
 
   const formik = useFormik({
     initialValues: { username: "", password: "", passwordConfirmation: "" },
-    validationSchema: signupSchema,
+    validationSchema: 
+    signupSchema(
+      t('registration.userNameLength'),
+      t('registration.passwordLength'),
+      t('registration.requaredField'),
+      t('registration.passwordMatching')
+    ),
     onSubmit: async (values) => {    
       const { username, password } = values;
       try {
         setInvalidAuth(false);
-        await axios
-          .post('/api/v1/signup', { username, password })
-          .then((response) => {
-            logIn(response.data);
-            navigate('/');
-          });
-      } catch(error) {
+        const { data } = await axios.post('/api/v1/signup', { username, password })
+        logIn(data);
+        navigate(appRoutes.chatPagePath());
+
+        } catch(error) {
         if (error.isAxiosError && error.response.status === 409) {
           setInvalidAuth(true);
           return;
@@ -38,9 +42,10 @@ const SignupForm = () => {
       }
     },
   });
+
   return (
     <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-      <Title title="Регистрация"/>
+      <h1 className="text-center mb-4">{t('registration.registrationTitle')}</h1>
         <div className="form-floating mb-3">
           <Form.Control
           id="username"
@@ -106,7 +111,7 @@ const SignupForm = () => {
         </div>
       <LoginButton title={t('registration.registrationBtn')} />
     </Form>
-    );
-}
+  );
+};
 
 export default SignupForm;

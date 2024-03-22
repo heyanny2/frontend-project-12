@@ -72,6 +72,6 @@ const init = async () => {
       </RollbarProvider>
     </Provider>
   );  
-}
+};
 
 export default init;

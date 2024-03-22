@@ -10,7 +10,7 @@ const MessageBox = ({ currentChannelMessages }) => {
 
   return (
     <div ref={refMessages} id="messages-box" className="chat-messages overflow-auto px-5">
-      {currentChannelMessages.map((message) => <Message message={message} key={message.id} />)}
+      {currentChannelMessages.map((message) => <Message message={message} key={message.id}/>)}
     </div>
   )
 };

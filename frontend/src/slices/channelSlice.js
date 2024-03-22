@@ -7,27 +7,26 @@ const defaultCurrentChannelId = 1;
 const initialState = channelsAdapter.getInitialState({currentChannelId: defaultCurrentChannelId});
 
 const channelSlice = createSlice({
-    name: 'channels',
-    initialState,
-    reducers: {
-        addChannel: channelsAdapter.addOne,
-        setCurrentChannel: (state, { payload }) => {
-            state.currentChannelId = payload;
-        },
-        deleteChannel: (state, { payload }) => {
-            if (state.currentChannelId === payload) {
-                state.currentChannelId = defaultCurrentChannelId;
-            }
-
-            channelsAdapter.removeOne(state, payload)
-        },
-        renameChannel: channelsAdapter.updateOne,
+  name: 'channels',
+  initialState,
+  reducers: {
+    addChannel: channelsAdapter.addOne,
+    setCurrentChannel: (state, { payload }) => {
+      state.currentChannelId = payload;
     },
-    extraReducers: (builder) => {
-        builder.addCase(fetchInitialData.fulfilled, (state, { payload }) => {
-            channelsAdapter.setAll(state, payload.channels);
-        })
+    deleteChannel: (state, { payload }) => {
+      if (state.currentChannelId === payload) {
+        state.currentChannelId = defaultCurrentChannelId;
+      }
+        channelsAdapter.removeOne(state, payload)
     },
+    renameChannel: channelsAdapter.updateOne,
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchInitialData.fulfilled, (state, { payload }) => {
+      channelsAdapter.setAll(state, payload.channels);
+    })
+  },
 });
 
 export const { addChannel, addChannels, setCurrentChannel, deleteChannel,renameChannel } = channelSlice.actions;

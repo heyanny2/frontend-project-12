@@ -8,47 +8,50 @@ import { closeModalWindow } from "../../slices/modalWindowSlice";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import channelNameShema from "../../validation/channelNameSchema";
-import { channelsSelector, channelsNames } from '../../selectors/selectors';
-import { useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from "react";
+import { channelsNames } from "../../selectors/selectors";
 
-const RenameChannelModalWindow = () => {
-  const { renameSelectedChannel } = useChatApi();
+const ModalWindow = () => {
+  const { addNewChannel } = useChatApi();
+  const isModalWindowOpen = useSelector((state) => state.modalWindow.isOpen);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
-  const isModalWindowOpen = useSelector((state) => state.modalWindow.isOpen);
-  const relevantChannelId = useSelector((state) => state.modalWindow.relevantChannel);
+  const [isInvalidChannelName, setInvalidChannelName] = useState(false);
   const channelsNamesList = useSelector(channelsNames);
-  const channels = useSelector(channelsSelector.selectAll);
-  const relevantChannelName = channels.find(({ id }) => id === relevantChannelId).name;
   const inputRef = useRef(null);
-
+  
   useEffect(() => {
     if (inputRef.current) {
-      inputRef.current.select();
+      inputRef.current.focus();
     }
   }, []);
 
   const handleCloseModalWindow = () => {
-    dispatch(closeModalWindow({ type: null, relevantChannel: null }));
+    dispatch(closeModalWindow());
   };
 
   const formik = useFormik({
-    initialValues: { name: relevantChannelName },
-    validationSchema: 
+    initialValues: { name: "" },
+    validationSchema:
     channelNameShema(
-      channelsNamesList,
+      channelsNamesList, 
       t('modal.channelNameLength'),
       t('modal.requiredField'),
       t('modal.uniqueNameError')
     ),
     onSubmit: async (values) => {
-      const { name } = values;
       try {
-        await renameSelectedChannel({ id: relevantChannelId, name });
+        setInvalidChannelName(false);
+        const channel = {
+          ...values,
+        }
+        setInvalidChannelName(false);
+        await addNewChannel(values);
         handleCloseModalWindow();
-        toast.success(t('toast.channelRenaming'));
-      } catch {
+      } catch(error) {
+        console.log(error)
+        setInvalidChannelName(true);
+        console.log('error');
         toast.error(t('toast.networkError'));
       }
     },
@@ -57,30 +60,27 @@ const RenameChannelModalWindow = () => {
   return (
     <Modal show={isModalWindowOpen}>
       <div className="modal-header">
-        <div className="modal-title h4">{t('modal.renameChannel')}</div>
-        <button
-          type="button"
-          className="btn-close"
-          aria-label="Close"
-          onClick={handleCloseModalWindow}
-        >
-        </button>
+        <div className="modal-title h4">{t('modal.createChannel')}</div>
+          <button
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+            onClick={handleCloseModalWindow}>
+          </button>
       </div>
-
       <div className="modal-body">
-        <Form noValidate onSubmit={formik.handleSubmit} className="py-1 rounded-2">
+        <Form onSubmit={formik.handleSubmit} className="py-1 rounded-2">
           <div className="form-group">
             <Form.Control
               ref={inputRef}
               id="name"
-              name="name"
               type="text"
+              name="name"
               aria-label={t('modal.newChannelName')}
               className="p-1 ps-2 form-control"
               placeholder={t('modal.channelNameInput')}
               onChange={formik.handleChange}
-              isInvalid={(formik.errors.name && formik.touched.name)}
-              value={formik.values.name}
+              isInvalid={(formik.errors.name && formik.touched.name) || isInvalidChannelName}
             />
             <Form.Label htmlFor="name" className="form-label visually-hidden">
               {t('modal.channelNameInput')}
@@ -107,4 +107,4 @@ const RenameChannelModalWindow = () => {
   );
 };
 
-export default RenameChannelModalWindow;
+export default ModalWindow;
