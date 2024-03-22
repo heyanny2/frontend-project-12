@@ -48,7 +48,7 @@ const ChannelsPanel = () => {
         )}
       </ul>
     </div>
-  )
+  );
 };
 
 export default ChannelsPanel;
