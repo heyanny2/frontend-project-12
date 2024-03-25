@@ -1,15 +1,15 @@
-import { Modal } from "react-bootstrap";
-import ModalButtton from "../Buttons/ModalButton";
-import Form from "react-bootstrap/Form";
-import { useFormik } from "formik";
-import { useChatApi } from "../../hooks/hooks";
-import { useDispatch, useSelector } from "react-redux";
-import { closeModalWindow } from "../../slices/modalWindowSlice";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
-import channelNameShema from "../../validation/channelNameSchema";
-import { channelsSelector, channelsNames } from '../../selectors/selectors';
+import { Modal } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import { useFormik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useRef, useEffect } from 'react';
+import channelNameShema from '../../validation/channelNameSchema';
+import { channelsSelector, channelsNames } from '../../selectors/selectors';
+import { closeModalWindow } from '../../slices/modalWindowSlice';
+import { useChatApi } from '../../hooks/hooks';
+import ModalButtton from '../Buttons/ModalButton';
 
 const RenameChannelModalWindow = () => {
   const { renameSelectedChannel } = useChatApi();
@@ -25,6 +25,7 @@ const RenameChannelModalWindow = () => {
 
   useEffect(() => {
     if (inputRef.current) {
+      inputRef.current.focus();
       inputRef.current.select();
     }
   }, []);
@@ -35,12 +36,12 @@ const RenameChannelModalWindow = () => {
 
   const formik = useFormik({
     initialValues: { name: relevantChannelName },
-    validationSchema: 
+    validationSchema:
     channelNameShema(
       channelsNamesList,
       t('modal.channelNameLength'),
       t('modal.requiredField'),
-      t('modal.uniqueNameError')
+      t('modal.uniqueNameError'),
     ),
     onSubmit: async (values) => {
       const { name } = values;
@@ -55,21 +56,14 @@ const RenameChannelModalWindow = () => {
   });
 
   return (
-    <Modal show={isModalWindowOpen}>
-      <div className="modal-header">
-        <div className="modal-title h4">{t('modal.renameChannel')}</div>
-        <button
-          type="button"
-          className="btn-close"
-          aria-label="Close"
-          onClick={handleCloseModalWindow}
-        >
-        </button>
-      </div>
+    <Modal show={isModalWindowOpen} onHide={handleCloseModalWindow}>
+      <Modal.Header closeButton>
+        <Modal.Title>{t('modal.renameChannel')}</Modal.Title>
+      </Modal.Header>
 
-      <div className="modal-body">
-        <Form noValidate onSubmit={formik.handleSubmit} className="py-1 rounded-2">
-          <div className="form-group">
+      <Modal.Body>
+        <Form onSubmit={formik.handleSubmit}>
+          <Form.Group controlId="body">
             <Form.Control
               ref={inputRef}
               id="name"
@@ -82,27 +76,24 @@ const RenameChannelModalWindow = () => {
               isInvalid={(formik.errors.name && formik.touched.name)}
               value={formik.values.name}
             />
-            <Form.Label htmlFor="name" className="form-label visually-hidden">
-              {t('modal.channelNameInput')}
-            </Form.Label>
-            <Form.Control.Feedback type="invalid" className="invalid-feedback">
+            <Form.Label visuallyHidden>{t('modal.channelNameInput')}</Form.Label>
+            <Form.Control.Feedback type="invalid">
               {formik.errors.name}
             </Form.Control.Feedback>
-          </div>
-          <div className="d-flex justify-content-end">
-            <ModalButtton
-              title={t('modal.cancelBtn')}
-              priority={false}
-              onClick={handleCloseModalWindow}
-            />
-            <ModalButtton
-              title={t('modal.sendBtn')}
-              priority={true}
-              onClick={formik.handleSubmit}
-            />
-          </div>
+            <Modal.Footer>
+              <ModalButtton
+                title={t('modal.cancelBtn')}
+                onClick={handleCloseModalWindow}
+              />
+              <ModalButtton
+                title={t('modal.sendBtn')}
+                onClick={formik.handleSubmit}
+                priority
+              />
+            </Modal.Footer>
+          </Form.Group>
         </Form>
-      </div>
+      </Modal.Body>
     </Modal>
   );
 };

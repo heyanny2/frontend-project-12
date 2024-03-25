@@ -1,10 +1,9 @@
-import { Modal } from "react-bootstrap";
-import ModalButtton from "../Buttons/ModalButton";
-import { useDispatch, useSelector } from "react-redux";
-import { closeModalWindow } from "../../slices/modalWindowSlice";
-import { useTranslation } from "react-i18next";
-import { useChatApi } from "../../hooks/hooks";
-
+import { Modal } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { useChatApi } from '../../hooks/hooks';
+import { closeModalWindow } from '../../slices/modalWindowSlice';
+import ModalButtton from '../Buttons/ModalButton';
 
 const DeleteChannelModalWindow = () => {
   const { removeSelectedChannel } = useChatApi();
@@ -24,31 +23,24 @@ const DeleteChannelModalWindow = () => {
 
   return (
     <Modal show={isModalWindowOpen}>
-      <div className="modal-header">
-        <div className="modal-title h4">{t('modal.removeChannel')}</div>
-        <button
-          type="button"
-          className="btn-close"
-          aria-label="Close"
-          onClick={handleCloseModalWindow}>
-        </button>
-      </div>
+      <Modal.Header closeButton>
+        <Modal.Title>{t('modal.removeChannel')}</Modal.Title>
+      </Modal.Header>
 
-      <div className="modal-body">
-        <p className="lead">{t('modal.sure')}</p>
-        <div className="d-flex justify-content-end">
+      <Modal.Body>
+        <Modal.Title>{t('modal.sure')}</Modal.Title>
+        <Modal.Footer>
           <ModalButtton
             title={t('modal.cancelBtn')}
-            priority={false}
             onClick={handleCloseModalWindow}
           />
           <ModalButtton
             title={t('modal.removeBtn')}
-            priority={true}
             onClick={() => handleDeleteChannel(relevantChannelId)}
+            priority
           />
-        </div>        
-      </div>
+        </Modal.Footer>
+      </Modal.Body>
     </Modal>
   );
 };

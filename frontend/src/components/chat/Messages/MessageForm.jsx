@@ -1,15 +1,16 @@
-import { Button, Form, InputGroup } from "react-bootstrap";
-import { TbMessage } from "react-icons/tb";
-import { useSelector } from "react-redux";
-import {currentChannel} from "../../../selectors/selectors"
-import {useFormik} from "formik";
-import { useAuthorization, useChatApi } from "../../../hooks/hooks";
-import { useTranslation } from "react-i18next";
+import { Button, Form, InputGroup } from 'react-bootstrap';
+import { TbMessage } from 'react-icons/tb';
+import { useSelector } from 'react-redux';
+import { useRollbar } from '@rollbar/react';
+import { useFormik } from 'formik';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import leoProfanity from 'leo-profanity';
 import { useEffect, useRef } from 'react';
-import messageSchema from "../../../validation/messageSchema";
-import { toast } from "react-toastify";
-import { useRollbar } from '@rollbar/react';
+import { useAuthorization, useChatApi } from '../../../hooks/hooks';
+import { currentChannel } from '../../../selectors/selectors';
+import messageSchema from '../../../validation/messageSchema';
+import './style.css';
 
 const MessageForm = () => {
   const { t } = useTranslation();
@@ -23,17 +24,18 @@ const MessageForm = () => {
     initialValues: { text: '', username: getUserName() },
     validationSchema: messageSchema(t('message.requiredField')),
     onSubmit: async ({ text, username }) => {
+      const message = {
+        username,
+        text: leoProfanity.clean(text),
+        сhannelId: currentChannelData?.id,
+      };
       try {
-        const message = {
-          username,
-          text: leoProfanity.clean(text),
-          сhannelId: currentChannelData?.id,
-        }
         await addNewMessage(message);
         formik.resetForm();
         refInput?.current?.focus();
-      } catch {
+      } catch (error) {
         toast.error(t('toast.networkError'));
+        rollbar.error('MessageSending', error);
       }
     },
   });
@@ -44,7 +46,7 @@ const MessageForm = () => {
 
   return (
     <div className="mt-auto px-5 py-3">
-      <Form noValidate onSubmit={formik.handleSubmit} className="py-1 rounded-2">
+      <Form noValidate onSubmit={formik.handleSubmit} className="py-1 border rounded-2">
         <InputGroup hasValidation={!formik.dirty || !formik.isValid}>
           <Form.Control
             ref={refInput}
@@ -57,13 +59,15 @@ const MessageForm = () => {
             value={formik.values.text}
             disabled={formik.isSubmitting}
           />
-        <Button variant="group-vertical" type="submit" disabled={!formik.dirty || !formik.isValid}>
-          <TbMessage className="add-icon"/>
-          <span className="visually-hidden">{t('message.sendMessage')}</span>
-        </Button>
-      </InputGroup>
-    </Form>
-  </div>
+          <Button variant="group-vertical" type="submit" disabled={!formik.dirty || !formik.isValid}>
+            <TbMessage />
+            <span className="visually-hidden">
+              {t('message.sendMessage')}
+            </span>
+          </Button>
+        </InputGroup>
+      </Form>
+    </div>
   );
 };
 

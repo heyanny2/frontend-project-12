@@ -1,4 +1,4 @@
-import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import fetchInitialData from '../context/InitialDataThunk';
 
 const messagesAdapter = createEntityAdapter();

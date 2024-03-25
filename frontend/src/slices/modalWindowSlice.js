@@ -1,10 +1,11 @@
+/* eslint-disable no-param-reassign */
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 
 const modalWindowAdapter = createEntityAdapter();
 const initialState = modalWindowAdapter.getInitialState({
-    isOpen: false,
-    type: null,
-    relevantChannel: null,
+  isOpen: false,
+  type: null,
+  relevantChannel: null,
 });
 
 const modalWindowSlice = createSlice({
@@ -16,13 +17,13 @@ const modalWindowSlice = createSlice({
       state.type = payload.type;
       state.relevantChannel = payload.relevantChannel;
     },
-    
+
     closeModalWindow: (state) => {
       state.isOpen = false;
       state.type = null;
       state.relevantChannel = null;
-    }
-  }
+    },
+  },
 });
 
 export const { openModalWindow, closeModalWindow } = modalWindowSlice.actions;

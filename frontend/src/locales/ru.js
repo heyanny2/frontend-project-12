@@ -18,6 +18,7 @@ const ru = {
       passwordLength: 'Не менее 6 символов',
       passwordMatching: 'Пароли должны совпадать',
       registrationBtn: 'Зарегистрироваться',
+      requiredField: 'Обязательное поле',
     },
     channel: {
       channels: 'Каналы',

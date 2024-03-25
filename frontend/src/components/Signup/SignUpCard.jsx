@@ -1,17 +1,26 @@
-import signupImg from '../../img/registration.jpg'
-import SignupForm from './SignUpForm';
 import { useTranslation } from 'react-i18next';
+import { Card, Col, Image } from 'react-bootstrap';
+import signupImg from '../../img/registration.jpg';
+import SignupForm from './SignUpForm';
 
 const SignupCard = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="card shadow-sm">
-      <div className="card-body d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
-        <img src={signupImg} alt={t('registration.registrationTitle')} className="card-img" />
-          <SignupForm />
-      </div>
-    </div>
+    <Card className="shadow-sm">
+      <Card.Body className="row p-5">
+        <Col xs={12} md={6} className="d-flex align-items-center justify-content-center">
+          <Image
+            width={200}
+            height={200}
+            className="rounded-circle"
+            alt={t('registration.registrationTitle')}
+            src={signupImg}
+          />
+        </Col>
+        <SignupForm />
+      </Card.Body>
+    </Card>
   );
 };
 

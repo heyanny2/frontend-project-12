@@ -1,24 +1,20 @@
-import LoginForm from "./LoginForm";
-import LoginFooter from "./LoginFooter";
-import { useTranslation } from 'react-i18next';
+import { Card, Col, Image } from 'react-bootstrap';
+import LoginForm from './LoginForm';
+import LoginFooter from './LoginFooter';
 import loginImg from '../../img/login.jpg';
 
-const LoginCard = () => {
-  const { t } = useTranslation();
-
-  return(
-    <div className="col-12 col-md-8 col-xxl-6">
-      <div className="card shadow-sm">
-        <div className="card-body row p-5">
-          <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-            <img src={loginImg} className="card-img" alt={t('login.loginTitle')}/>
-          </div>
-          <LoginForm />
-        </div>
-        <LoginFooter/>
-      </div>
-    </div>
-  );
-};
+const LoginCard = () => (
+  <Col xs={12} md={8} xxl={6}>
+    <Card className="shadow-sm">
+      <Card.Body className="row p-5">
+        <Col xs={12} md={6} className="d-flex align-items-center justify-content-center">
+          <Image className="rounded-circle" with={200} height={200} alt="Войти" src={loginImg} />
+        </Col>
+        <LoginForm />
+      </Card.Body>
+      <LoginFooter />
+    </Card>
+  </Col>
+);
 
 export default LoginCard;

@@ -1,15 +1,14 @@
-import SignupCard from "../components/Signup/SignUpCard";
+import { Col, Container, Row } from 'react-bootstrap';
+import SignupCard from '../components/Signup/SignUpCard';
 
-const Signup = () => {
-  return (
-    <div className="container-fluid h-100">
-      <div className="row justify-content-center align-content-center h-100">
-        <div className="col-12 col-md-8 col-xxl-6">
-          <SignupCard />
-        </div>
-      </div>
-    </div>
-  );
-};
+const Signup = () => (
+  <Container className="h-100" fluid>
+    <Row className="justify-content-center align-content-center h-100">
+      <Col xs={12} md={8} xxl={6}>
+        <SignupCard />
+      </Col>
+    </Row>
+  </Container>
+);
 
 export default Signup;

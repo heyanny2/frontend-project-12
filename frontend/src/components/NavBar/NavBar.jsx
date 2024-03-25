@@ -1,36 +1,25 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import "./style.css";
-import { useTranslation } from "react-i18next";
-import { useAuthorization } from '../../hooks/hooks';
+import { Container, Navbar } from 'react-bootstrap';
+import { Link, Outlet } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import LogoutButton from './LogoutButton';
 import { appRoutes } from '../../routes/index';
-import { Button } from 'react-bootstrap';
+import './style.css';
 
 const NavBar = () => {
   const { t } = useTranslation();
-  const auth = useAuthorization();  
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    navigate(appRoutes.loginPagePath());
-    auth.logOut();
-  };
-
-  const LogoutButton = (title) => {
-    if (auth.userData) { 
-      return <Button className="logout-button" onClick={handleLogout}>{title}</Button>;
-    }
-    return null;
-  };
 
   return (
-    <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
-      <div className="nav-container">
-        <NavLink to={appRoutes.chatPagePath()} className="navbar-brand">
-        {t('navigation.chatName')}
-        </NavLink>
-        {LogoutButton(t('navigation.exitBtn'))}
-      </div>
-    </nav>
+    <>
+      <Navbar bg="white" expand="lg" className="shadow-sm">
+        <Container>
+          <Navbar.Brand as={Link} to={appRoutes.chatPagePath()}>
+            {t('navigation.chatName')}
+          </Navbar.Brand>
+          {LogoutButton(t('navigation.exitBtn'))}
+        </Container>
+      </Navbar>
+      <Outlet />
+    </>
   );
 };
 

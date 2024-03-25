@@ -1,18 +1,22 @@
-import {NavLink} from "react-router-dom";
+import { Card } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { appRoutes } from '../../routes';
 
-const LoginFooter = ({ title }) => {
+const LoginFooter = () => {
   const { t } = useTranslation();
 
-  return(
-    <div className="card-footer p-4">
+  return (
+    <Card.Footer className="p-4">
       <div className="text-center">
-        <span>{t('login.noAccount')} </span> 
-        <NavLink to="/signup" className="link">
+        <span>
+          {t('login.noAccount')}
+        </span>
+        <Link to={appRoutes.signupPagePath()}>
           {t('registration.registrationTitle')}
-        </NavLink>
+        </Link>
       </div>
-    </div>
+    </Card.Footer>
   );
 };
 

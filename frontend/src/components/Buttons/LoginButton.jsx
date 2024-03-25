@@ -1,12 +1,13 @@
-const Button = ({ title }) => {
-  return(
-    <button
-      type="submit"
-      className="w-100 mb-3 btn btn-outline-primary login-button"
-    >
-      {title}
-    </button>
-  );
-};
+import { Button } from 'react-bootstrap';
 
-export default Button;
+const LoginButton = ({ title }) => (
+  <Button
+    type="submit"
+    variant="outline-primary"
+    className="w-100 mb-3"
+  >
+    {title}
+  </Button>
+);
+
+export default LoginButton;
