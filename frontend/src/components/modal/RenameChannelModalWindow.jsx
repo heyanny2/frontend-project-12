@@ -21,12 +21,12 @@ const RenameChannelModalWindow = () => {
   const channelsNamesList = useSelector(channelsNames);
   const channels = useSelector(channelsSelector.selectAll);
   const relevantChannelName = channels.find(({ id }) => id === relevantChannelId).name;
-  const inputRef = useRef(null);
+  const refModalInput = useRef(null);
 
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-      inputRef.current.select();
+    if (refModalInput.current) {
+      refModalInput.current.focus();
+      refModalInput.current.select();
     }
   }, []);
 
@@ -63,14 +63,14 @@ const RenameChannelModalWindow = () => {
 
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
-          <Form.Group controlId="body">
+          <Form.Group>
             <Form.Control
-              ref={inputRef}
+              ref={refModalInput}
               id="name"
-              name="name"
               type="text"
-              aria-label={t('modal.newChannelName')}
-              className="p-1 ps-2 form-control"
+              name="name"
+              aria-label={t('modal.channelNameInput')}
+              className="p-2 ps-2 form-control"
               placeholder={t('modal.channelNameInput')}
               onChange={formik.handleChange}
               isInvalid={(formik.errors.name && formik.touched.name)}

@@ -40,14 +40,12 @@ const AddModalWindow = () => {
       t('modal.requiredField'),
       t('modal.uniqueNameError'),
     ),
-    onSubmit: async (body) => {
+    onSubmit: async (values) => {
       try {
-        await addNewChannel(body);
-        console.log(body);
+        await addNewChannel(values);
         handleCloseModalWindow();
         toast.success(t('toast.channelCreation'));
       } catch (error) {
-        console.log(error);
         toast.error(t('toast.networkError'));
         rollbar.error('AddChannel', error);
       }
@@ -64,12 +62,12 @@ const AddModalWindow = () => {
           <Form.Group>
             <Form.Control
               ref={refModalInput}
+              id="name"
               type="text"
-              name="body"
+              name="name"
               aria-label={t('modal.channelNameInput')}
               className="p-2 ps-2 form-control"
               onChange={formik.handleChange}
-              value={formik.values.body}
               isInvalid={(formik.errors.name && formik.touched.name)}
             />
             <Form.Label visuallyHidden>

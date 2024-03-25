@@ -14,7 +14,6 @@ import ModalWindow from '../components/modal/ModalWindow';
 import MessageBox from '../components/chat/Messages/MessageBox';
 import MessageForm from '../components/chat/Messages/MessageForm';
 import { appRoutes } from '../routes';
-import '../components/style.css';
 
 const Home = () => {
   const { t } = useTranslation();

@@ -5,7 +5,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { currentChannel } from '../../../selectors/selectors';
 import { openModalWindow } from '../../../slices/modalWindowSlice';
-import './style.css';
 
 const Channel = ({ channel, onClick }) => {
   const dispatch = useDispatch();
@@ -25,7 +24,7 @@ const Channel = ({ channel, onClick }) => {
   if (!removable) {
     return (
       <Nav.Item className="w-100">
-        <div role="group" className="d-flex dropdown btn-group">
+        <Dropdown as={ButtonGroup} className="d-flex">
           <Button
             type="button"
             className="w-100 rounded-0 text-start text-truncate"
@@ -35,7 +34,7 @@ const Channel = ({ channel, onClick }) => {
             <span className="me-1">{t('channel.prefix')}</span>
             {name}
           </Button>
-        </div>
+        </Dropdown>
       </Nav.Item>
     );
   }

@@ -3,7 +3,6 @@ import { Link, Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LogoutButton from './LogoutButton';
 import { appRoutes } from '../../routes/index';
-import './style.css';
 
 const NavBar = () => {
   const { t } = useTranslation();

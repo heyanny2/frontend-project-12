@@ -10,7 +10,6 @@ import { useEffect, useRef } from 'react';
 import { useAuthorization, useChatApi } from '../../../hooks/hooks';
 import { currentChannel } from '../../../selectors/selectors';
 import messageSchema from '../../../validation/messageSchema';
-import './style.css';
 
 const MessageForm = () => {
   const { t } = useTranslation();

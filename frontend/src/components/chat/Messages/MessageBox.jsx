@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import Message from './Message';
-import './style.css';
 
 const MessageBox = ({ currentChannelMessages }) => {
   const refMessages = useRef(null);

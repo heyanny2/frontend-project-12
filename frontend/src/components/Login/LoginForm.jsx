@@ -22,9 +22,9 @@ const LoginForm = () => {
     initialValues: { email: '', password: '' },
     validationSchema: loginSchema(t('login.requiredField')),
     onSubmit: async (values) => {
+      setInvalidUserData(false);
       try {
-        setInvalidUserData(false);
-        const data = await axios.post(chatContextRoutes.login(), values);
+        const { data } = await axios.post(chatContextRoutes.login(), values);
         logIn(data);
         navigate(appRoutes.chatPagePath());
       } catch (error) {

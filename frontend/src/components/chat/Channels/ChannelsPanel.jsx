@@ -1,32 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useSelector, useDispatch } from 'react-redux';
 import { TbPlaylistAdd } from 'react-icons/tb';
-import { useTranslation } from 'react-i18next';
-import { useEffect, useRef } from 'react';
 import { Col, Nav } from 'react-bootstrap';
-import { channelsSelector, currentChannel } from '../../../selectors/selectors';
+import { useTranslation } from 'react-i18next';
+import { channelsSelector } from '../../../selectors/selectors';
 import { setCurrentChannel } from '../../../slices/channelSlice';
 import { openModalWindow } from '../../../slices/modalWindowSlice';
 import Channel from './Channel';
-import './style.css';
 
 const ChannelsPanel = () => {
   const channels = useSelector(channelsSelector.selectAll);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const refChannels = useRef(null);
-  const offsetHeight = refChannels?.current?.offsetHeight;
-  const scrollHeight = refChannels?.current?.scrollHeight;
-  const channelOffsetHeight = document.querySelector('.current-channel')?.offsetHeight;
-  const currentChannelId = useSelector(currentChannel)?.id;
-  const currentChannelIndex = channels.findIndex((channel) => channel?.id === currentChannelId);
-  const currentChannelScrollHeight = currentChannelIndex * channelOffsetHeight;
-
-  useEffect(() => {
-    if (offsetHeight < scrollHeight) {
-      refChannels?.current?.scrollTo(0, currentChannelScrollHeight);
-    }
-  }, [channels]);
 
   const handleSetCurrentChannel = (id) => {
     dispatch(setCurrentChannel(id));
@@ -43,7 +28,6 @@ const ChannelsPanel = () => {
         <button
           type="button"
           className="p-0 text-primary btn btn-group-vertical"
-          data-toggle="modal"
           onClick={handleCreateNewChannel}
         >
           <TbPlaylistAdd />
