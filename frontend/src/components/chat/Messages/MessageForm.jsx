@@ -60,9 +60,7 @@ const MessageForm = () => {
           />
           <Button variant="group-vertical" type="submit" disabled={!formik.dirty || !formik.isValid}>
             <TbMessage />
-            <span className="visually-hidden">
-              {t('message.sendMessage')}
-            </span>
+            <span className="visually-hidden">{t('message.sendMessage')}</span>
           </Button>
         </InputGroup>
       </Form>

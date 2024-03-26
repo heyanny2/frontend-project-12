@@ -1,14 +1,27 @@
 import { useTranslation } from 'react-i18next';
+import { Col } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import MessageForm from './Messages/MessageForm';
+import MessageBox from './Messages/MessageBox';
+import { messagesSelector, currentChannel } from '../../selectors/selectors';
 
-const ChatPanel = ({ currentChannelName, currentChannelMessagesCount }) => {
+const ChatPanel = () => {
   const { t } = useTranslation();
 
+  const messages = useSelector(messagesSelector.selectAll);
+  const currentChannelData = useSelector(currentChannel);
+  const currentChannelName = currentChannelData?.name;
+  const currentChannelMessages = messages.filter(
+    (message) => message.сhannelId === currentChannelData?.id,
+  );
+  const currentChannelMessagesCount = currentChannelMessages.length;
+
   return (
-    <div className="col p-0 h-100">
+    <Col className="p-0 h-100">
       <div className="d-flex flex-column h-100">
         <div className="bg-light mb-4 p-3 shadow-sm small">
           <p className="m-0">
-            <b className="channel-name">
+            <b>
               {t('channel.prefix')}
               {currentChannelName}
             </b>
@@ -17,9 +30,11 @@ const ChatPanel = ({ currentChannelName, currentChannelMessagesCount }) => {
             {t('message.messagesCount', { count: currentChannelMessagesCount })}
           </span>
         </div>
-        <div id="messages-box" className="chat-messages overflow-auto px-5 " />
+
+        <MessageBox currentChannelMessages={currentChannelMessages} />
+        <MessageForm />
       </div>
-    </div>
+    </Col>
   );
 };
 

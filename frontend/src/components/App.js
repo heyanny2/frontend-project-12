@@ -18,21 +18,23 @@ const AuthorizationRoute = ({ children }) => {
 
 const App = () => (
   <BrowserRouter>
-    <NavBar />
-    <Routes>
-      <Route path="*" element={<NotFound />} />
-      <Route
-        path={appRoutes.chatPagePath()}
-        element={(
-          <AuthorizationRoute>
-            <Chat />
-          </AuthorizationRoute>
-        )}
-      />
-      <Route path={appRoutes.loginPagePath()} element={<Login />} />
-      <Route path={appRoutes.signupPagePath()} element={<Signup />} />
-    </Routes>
-    <ToastContainer />
+    <div className="d-flex flex-column h-100">
+      <NavBar />
+      <Routes>
+        <Route path="*" element={<NotFound />} />
+        <Route
+          path={appRoutes.chatPagePath()}
+          element={(
+            <AuthorizationRoute>
+              <Chat />
+            </AuthorizationRoute>
+          )}
+        />
+        <Route path={appRoutes.loginPagePath()} element={<Login />} />
+        <Route path={appRoutes.signupPagePath()} element={<Signup />} />
+      </Routes>
+      <ToastContainer />
+    </div>
   </BrowserRouter>
 );
 
