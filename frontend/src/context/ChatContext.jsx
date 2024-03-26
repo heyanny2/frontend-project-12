@@ -8,7 +8,7 @@ export const ChatContext = createContext({});
 
 const ChatContextProvider = ({ socket, children }) => {
   const dispatch = useDispatch();
-  const timeout = 4000;
+  const timeout = 3000;
 
   const addNewMessage = useCallback(
     async (message) => {
