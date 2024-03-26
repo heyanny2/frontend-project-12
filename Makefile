@@ -8,7 +8,7 @@ start-backend:
 	npx start-server
 
 start:
-	npm run build & npx start-server -s ./frontend/build
+	make start-backend & make start-frontend
 
 build:
 	npm run build
