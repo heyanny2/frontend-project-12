@@ -12,3 +12,9 @@ start:
 
 build:
 	npm run build
+
+lint-frontend:
+	make -C frontend lint
+
+deploy:
+	git push heroku main
