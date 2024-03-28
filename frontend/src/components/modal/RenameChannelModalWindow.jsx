@@ -1,5 +1,4 @@
-import { Modal } from 'react-bootstrap';
-import Form from 'react-bootstrap/Form';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +9,6 @@ import channelNameShema from '../../validation/channelNameSchema';
 import { channelsSelector, channelsNames } from '../../selectors/selectors';
 import { closeModalWindow } from '../../slices/modalWindowSlice';
 import { useChatApi } from '../../hooks/hooks';
-import ModalButtton from '../Buttons/ModalButton';
 
 const RenameChannelModalWindow = () => {
   const { renameSelectedChannel } = useChatApi();
@@ -66,7 +64,6 @@ const RenameChannelModalWindow = () => {
           <Form.Group controlId="name">
             <Form.Control
               ref={refModalInput}
-              id="name"
               type="text"
               name="name"
               className="p-2 ps-2 form-control"
@@ -79,15 +76,21 @@ const RenameChannelModalWindow = () => {
               {formik.errors.name}
             </Form.Control.Feedback>
             <Modal.Footer>
-              <ModalButtton
-                title={t('modal.cancelBtn')}
+              <Button
+                className="me-2"
+                variant="secondary"
+                type="button"
                 onClick={handleCloseModalWindow}
-              />
-              <ModalButtton
-                title={t('modal.sendBtn')}
+              >
+                {t('modal.cancelBtn')}
+              </Button>
+              <Button
+                variant="primary"
+                type="submit"
                 onClick={formik.handleSubmit}
-                priority
-              />
+              >
+                {t('modal.sendBtn')}
+              </Button>
             </Modal.Footer>
           </Form.Group>
         </Form>

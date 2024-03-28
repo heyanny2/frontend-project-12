@@ -1,5 +1,4 @@
-import { Modal } from 'react-bootstrap';
-import Form from 'react-bootstrap/Form';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import leoProfanity from 'leo-profanity';
 import { useChatApi } from '../../hooks/hooks';
-import ModalButtton from '../Buttons/ModalButton';
 import channelNameShema from '../../validation/channelNameSchema';
 import { closeModalWindow } from '../../slices/modalWindowSlice';
 import { channelsNames } from '../../selectors/selectors';
@@ -79,15 +77,21 @@ const AddModalWindow = () => {
               {formik.errors.name}
             </Form.Control.Feedback>
             <Modal.Footer>
-              <ModalButtton
-                title={t('modal.cancelBtn')}
+              <Button
+                className="me-2"
+                variant="secondary"
+                type="button"
                 onClick={handleCloseModalWindow}
-              />
-              <ModalButtton
-                title={t('modal.sendBtn')}
+              >
+                {t('modal.cancelBtn')}
+              </Button>
+              <Button
+                variant="info"
+                type="submit"
                 onClick={formik.handleSubmit}
-                priority
-              />
+              >
+                {t('modal.sendBtn')}
+              </Button>
             </Modal.Footer>
           </Form.Group>
         </Form>

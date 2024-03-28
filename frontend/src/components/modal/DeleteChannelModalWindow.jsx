@@ -1,9 +1,8 @@
-import { Modal } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useChatApi } from '../../hooks/hooks';
 import { closeModalWindow } from '../../slices/modalWindowSlice';
-import ModalButtton from '../Buttons/ModalButton';
 
 const DeleteChannelModalWindow = () => {
   const { removeSelectedChannel } = useChatApi();
@@ -30,15 +29,20 @@ const DeleteChannelModalWindow = () => {
       <Modal.Body>
         <Modal.Title>{t('modal.sure')}</Modal.Title>
         <Modal.Footer>
-          <ModalButtton
-            title={t('modal.cancelBtn')}
+          <Button
+            variant="secondary"
+            className="me-2"
             onClick={handleCloseModalWindow}
-          />
-          <ModalButtton
-            title={t('modal.removeBtn')}
+          >
+            {t('modal.cancelBtn')}
+          </Button>
+          <Button
+            type="submit"
+            variant="danger"
             onClick={() => handleDeleteChannel(relevantChannelId)}
-            priority
-          />
+          >
+            {t('modal.removeBtn')}
+          </Button>
         </Modal.Footer>
       </Modal.Body>
     </Modal>
