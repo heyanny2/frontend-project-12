@@ -63,7 +63,7 @@ const RenameChannelModalWindow = () => {
 
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
-          <Form.Group>
+          <Form.Group controlId="name">
             <Form.Control
               ref={refModalInput}
               id="name"
