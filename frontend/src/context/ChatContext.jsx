@@ -40,10 +40,10 @@ const ChatContextProvider = ({ socket, children }) => {
   );
 
   const renameSelectedChannel = useCallback(
-    async (newName) => {
+    async ({ id, name }) => {
       await socket
         .timeout(timeout)
-        .emit('renameChannel', newName);
+        .emit('renameChannel', { id, name });
     },
     [socket],
   );

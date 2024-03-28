@@ -41,8 +41,8 @@ const init = async () => {
   socket.on('removeChannel', (channel) => {
     store.dispatch(deleteChannel(channel.id));
   });
-  socket.on('renameChannel', (channel) => {
-    store.dispatch(renameChannel({ id: channel.id, changes: { name: channel.name } }));
+  socket.on('renameChannel', ({ id, name }) => {
+    store.dispatch(renameChannel({ id, changes: { name } }));
   });
 
   const profanityFilter = LeoProfanity;
