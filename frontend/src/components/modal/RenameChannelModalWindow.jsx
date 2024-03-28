@@ -45,6 +45,7 @@ const RenameChannelModalWindow = () => {
     ),
     onSubmit: async (values) => {
       const filteredRename = leoProfanity.clean(values.name);
+      console.log(filteredRename);
       try {
         await renameSelectedChannel({ id: relevantChannelId, name: filteredRename });
         handleCloseModalWindow();

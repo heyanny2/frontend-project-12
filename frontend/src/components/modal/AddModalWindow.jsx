@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRollbar } from '@rollbar/react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import leoProfanity from 'leo-profanity';
 import { useChatApi } from '../../hooks/hooks';
 import ModalButtton from '../Buttons/ModalButton';
 import channelNameShema from '../../validation/channelNameSchema';
@@ -41,8 +42,9 @@ const AddModalWindow = () => {
       t('modal.uniqueNameError'),
     ),
     onSubmit: async (values) => {
+      const filteredName = leoProfanity.clean(values.name);
       try {
-        await addNewChannel(values);
+        await addNewChannel({ name: filteredName });
         handleCloseModalWindow();
         toast.success(t('toast.channelCreation'));
       } catch (error) {
