@@ -19,6 +19,7 @@ const ru = {
       passwordMatching: 'Пароли должны совпадать',
       registrationBtn: 'Зарегистрироваться',
       requiredField: 'Обязательное поле',
+      userExist: 'Такой пользователь уже существует',
     },
     channel: {
       channels: 'Каналы',

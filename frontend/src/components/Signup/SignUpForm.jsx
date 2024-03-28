@@ -120,7 +120,7 @@ const SignupForm = () => {
             {t('registration.passwordConfirmation')}
           </Form.Label>
           <Form.Control.Feedback type="invalid">
-            {t('registration.passwordMatching')}
+            {formik.errors.confirmPassword || t('registration.userExist')}
           </Form.Control.Feedback>
         </Form.Floating>
         <LoginButton title={t('registration.registrationBtn')} />
