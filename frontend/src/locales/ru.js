@@ -3,7 +3,7 @@ const ru = {
     login: {
       loginTitle: 'Войти',
       userName: 'Ваш ник',
-      password: 'Ваш пароль',
+      password: 'Пароль',
       loginButton: 'Войти',
       loginError: 'Неверные имя пользователя или пароль',
       noAccount: 'Нет аккаунта?',
