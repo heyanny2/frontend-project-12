@@ -27,7 +27,6 @@ const ru = {
       networkError: 'Ошибка соединения',
       channelCreation: 'Канал создан',
       channelRenaming: 'Канал переименован',
-      channelRemoval: 'Канал удалён',
       removeChannel: 'Удалить',
       renameChannel: 'Переименовать',
       controlChannel: 'Управление каналом',

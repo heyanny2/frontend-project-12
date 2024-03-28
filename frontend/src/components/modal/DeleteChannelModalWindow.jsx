@@ -1,6 +1,7 @@
 import { Modal, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useChatApi } from '../../hooks/hooks';
 import { closeModalWindow } from '../../slices/modalWindowSlice';
 
@@ -13,6 +14,7 @@ const DeleteChannelModalWindow = () => {
 
   const handleDeleteChannel = (id) => {
     removeSelectedChannel(id);
+    toast.success(t('toast.removeChannel'));
     dispatch(closeModalWindow());
   };
 
