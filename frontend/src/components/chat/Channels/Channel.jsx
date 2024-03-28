@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Button, ButtonGroup, Dropdown, Nav,
 } from 'react-bootstrap';
+import leoProfanity from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { currentChannel } from '../../../selectors/selectors';
 import { openModalWindow } from '../../../slices/modalWindowSlice';
@@ -10,6 +11,7 @@ const Channel = ({ channel, onClick }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { id, name, removable } = channel;
+  const channelName = leoProfanity.clean(name);
   const currentChannelData = useSelector(currentChannel);
   const isActive = () => id === currentChannelData.id;
 
@@ -49,7 +51,7 @@ const Channel = ({ channel, onClick }) => {
           variant={isActive ? 'secondary' : null}
         >
           <span className="me-1">{t('channel.prefix')}</span>
-          {name}
+          {channelName}
         </Button>
         <Dropdown.Toggle
           split
