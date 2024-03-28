@@ -14,7 +14,7 @@ const DeleteChannelModalWindow = () => {
 
   const handleDeleteChannel = (id) => {
     removeSelectedChannel(id);
-    toast.success(t('toast.removeChannel'));
+    toast.success(t('toast.channelRemoval'));
     dispatch(closeModalWindow());
   };
 
