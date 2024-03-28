@@ -19,7 +19,9 @@ const signupSchema = (
     .required(requiredField),
   passwordConfirmation: Yup
     .string()
-    .oneOf([Yup.ref('password')], passwordMatching),
+    .trim()
+    .oneOf([Yup.ref('password')], passwordMatching)
+    .required(requiredField),
 });
 
 export default signupSchema;

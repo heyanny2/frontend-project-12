@@ -114,13 +114,14 @@ const SignupForm = () => {
             value={formik.values.passwordConfirmation}
             isInvalid={isInvalidAuth
               || (formik.touched.passwordConfirmation && formik.errors.passwordConfirmation)}
+            isValid={formik.touched.passwordConfirmation && !formik.errors.passwordConfirmation}
             required
           />
           <Form.Label htmlFor="passwordConfirmation">
             {t('registration.passwordConfirmation')}
           </Form.Label>
           <Form.Control.Feedback type="invalid">
-            {formik.errors.confirmPassword || t('registration.userExist')}
+            {formik.errors.passwordConfirmation || t('registration.userExist')}
           </Form.Control.Feedback>
         </Form.Floating>
         <LoginButton title={t('registration.registrationBtn')} />
