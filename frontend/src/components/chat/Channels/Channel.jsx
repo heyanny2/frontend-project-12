@@ -26,17 +26,15 @@ const Channel = ({ channel, onClick }) => {
   if (!removable) {
     return (
       <Nav.Item className="w-100">
-        <Dropdown as={ButtonGroup} className="d-flex">
-          <Button
-            type="button"
-            className="w-100 rounded-0 text-start"
-            onClick={onClick}
-            variant={isActive ? 'secondary' : null}
-          >
-            <span className="me-1">{t('channel.prefix')}</span>
-            {name}
-          </Button>
-        </Dropdown>
+        <Button
+          type="button"
+          className="w-100 rounded-0 text-start"
+          onClick={onClick}
+          variant={isActive ? 'secondary' : null}
+        >
+          <span className="me-1">{t('channel.prefix')}</span>
+          {name}
+        </Button>
       </Nav.Item>
     );
   }
