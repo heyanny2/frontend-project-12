@@ -21,20 +21,16 @@ const UserDataContextProvider = ({ children }) => {
     setUserData(null);
   }, []);
 
-  const getUserName = () => userData.username;
-
   const memoAuth = useMemo(
     () => ({
       userData,
       logIn,
       logOut,
-      getUserName,
     }),
     [
       userData,
       logIn,
       logOut,
-      getUserName,
     ],
   );
 

@@ -15,16 +15,16 @@ const MessageForm = () => {
   const { t } = useTranslation();
   const rollbar = useRollbar();
   const { addNewMessage } = useChatApi();
-  const { getUserName } = useAuthorization();
+  const auth = useAuthorization();
   const currentChannelData = useSelector(currentChannel);
   const refInput = useRef(null);
 
   const formik = useFormik({
-    initialValues: { text: '', username: getUserName() },
+    initialValues: { text: '' },
     validationSchema: messageSchema(t('message.requiredField')),
-    onSubmit: async ({ text, username }) => {
+    onSubmit: async ({ text }) => {
       const message = {
-        username,
+        username: auth.userData.username,
         text: leoProfanity.clean(text),
         сhannelId: currentChannelData?.id,
       };
