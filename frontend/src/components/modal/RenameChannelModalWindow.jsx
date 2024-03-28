@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRef, useEffect } from 'react';
+import leoProfanity from 'leo-profanity';
 import channelNameShema from '../../validation/channelNameSchema';
 import { channelsSelector, channelsNames } from '../../selectors/selectors';
 import { closeModalWindow } from '../../slices/modalWindowSlice';
@@ -45,8 +46,9 @@ const RenameChannelModalWindow = () => {
     ),
     onSubmit: async (values) => {
       const { name } = values;
+      const filteredRename = leoProfanity.clean(name);
       try {
-        await renameSelectedChannel({ id: relevantChannelId, name });
+        await renameSelectedChannel({ id: relevantChannelId, name: filteredRename });
         handleCloseModalWindow();
         toast.success(t('toast.channelRenaming'));
       } catch {
