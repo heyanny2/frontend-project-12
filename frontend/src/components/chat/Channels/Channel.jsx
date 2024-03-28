@@ -46,7 +46,7 @@ const Channel = ({ channel, onClick }) => {
       <Dropdown className="d-flex" as={ButtonGroup}>
         <Button
           type="button"
-          className="w-100 rounded-0 text-start btn btn-secondary"
+          className="w-100 rounded-0 text-start text-truncate"
           onClick={onClick}
           variant={isActive ? 'secondary' : null}
         >
@@ -58,7 +58,7 @@ const Channel = ({ channel, onClick }) => {
           variant={isActive ? 'secondary' : null}
           type="button"
           id="dropdown-split-basic"
-          className="flex-grow-0"
+          className="border-0"
         >
           <span className="visually-hidden">{t('channel.controlChannel')}</span>
         </Dropdown.Toggle>

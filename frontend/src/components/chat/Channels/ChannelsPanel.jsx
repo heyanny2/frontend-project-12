@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useSelector, useDispatch } from 'react-redux';
 import { TbPlaylistAdd } from 'react-icons/tb';
-import { Col, Nav } from 'react-bootstrap';
+import { Col, Nav, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { channelsSelector } from '../../../selectors/selectors';
 import { setCurrentChannel } from '../../../slices/channelSlice';
@@ -22,20 +22,22 @@ const ChannelsPanel = () => {
   };
 
   return (
-    <Col className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
+    <Col className="col-4 col-md-2 border-end px-0 flex-column h-100 d-flex bg-light">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
         <b>{t('channel.channels')}</b>
-        <button
+        <Button
           type="button"
-          className="p-0 text-primary btn btn-group-vertical"
+          className="p-0 text-info"
+          variant="group-vertical"
           onClick={handleCreateNewChannel}
         >
-          <TbPlaylistAdd />
+          <TbPlaylistAdd size={25} />
           <span className="visually-hidden">{t('channel.addBtn')}</span>
-        </button>
+        </Button>
       </div>
       <Nav
         variant="pills"
+        id="channels-box"
         className="flex-column nav-fill px-2 mb-3 overflow-auto h-100 d-block"
       >
         {channels.map((channel) => (
