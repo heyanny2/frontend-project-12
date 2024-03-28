@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { TbPlaylistAdd } from 'react-icons/tb';
 import { Col, Nav, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { channelsSelector } from '../../../selectors/selectors';
+import { channelsSelector, currentChannel } from '../../../selectors/selectors';
 import { setCurrentChannel } from '../../../slices/channelSlice';
 import { openModalWindow } from '../../../slices/modalWindowSlice';
 import Channel from './Channel';
@@ -12,6 +12,7 @@ const ChannelsPanel = () => {
   const channels = useSelector(channelsSelector.selectAll);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const currentChannelId = useSelector(currentChannel);
 
   const handleSetCurrentChannel = (id) => {
     dispatch(setCurrentChannel(id));
@@ -45,6 +46,7 @@ const ChannelsPanel = () => {
             channel={channel}
             onClick={() => handleSetCurrentChannel(channel.id)}
             key={channel.id}
+            isActive={currentChannelId.id === channel.id}
           />
         ))}
       </Nav>

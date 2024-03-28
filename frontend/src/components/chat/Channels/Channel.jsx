@@ -1,19 +1,16 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   Button, ButtonGroup, Dropdown, Nav,
 } from 'react-bootstrap';
 import leoProfanity from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
-import { currentChannel } from '../../../selectors/selectors';
 import { openModalWindow } from '../../../slices/modalWindowSlice';
 
-const Channel = ({ channel, onClick }) => {
+const Channel = ({ isActive, channel, onClick }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { id, name, removable } = channel;
   const channelName = leoProfanity.clean(name);
-  const currentChannelData = useSelector(currentChannel);
-  const isActive = () => id === currentChannelData.id;
 
   const handleRenameChannel = (channelId) => {
     dispatch(openModalWindow({ type: 'rename', relevantChannel: channelId }));
@@ -28,7 +25,7 @@ const Channel = ({ channel, onClick }) => {
       <Nav.Item className="w-100">
         <Button
           type="button"
-          className="w-100 rounded-0 text-start"
+          className="w-100 rounded-0 text-start text-truncate"
           onClick={onClick}
           variant={isActive ? 'secondary' : null}
         >
