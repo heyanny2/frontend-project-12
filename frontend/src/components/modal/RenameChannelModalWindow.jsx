@@ -45,8 +45,7 @@ const RenameChannelModalWindow = () => {
       t('modal.uniqueNameError'),
     ),
     onSubmit: async (values) => {
-      const { name } = values;
-      const filteredRename = leoProfanity.clean(name);
+      const filteredRename = leoProfanity.clean(values.name);
       try {
         await renameSelectedChannel({ id: relevantChannelId, name: filteredRename });
         handleCloseModalWindow();
