@@ -16,7 +16,6 @@ const RenameChannelModalWindow = () => {
   const { renameSelectedChannel } = useChatApi();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
   const isModalWindowOpen = useSelector((state) => state.modalWindow.isOpen);
   const relevantChannelId = useSelector((state) => state.modalWindow.relevantChannel);
   const channelsNamesList = useSelector(channelsNames);
