@@ -29,7 +29,7 @@ const Channel = ({ channel, onClick }) => {
         <Dropdown as={ButtonGroup} className="d-flex">
           <Button
             type="button"
-            className="w-100 rounded-0 text-start text-truncate"
+            className="w-100 rounded-0 text-start"
             onClick={onClick}
             variant={isActive ? 'secondary' : null}
           >
@@ -63,14 +63,10 @@ const Channel = ({ channel, onClick }) => {
           <span className="visually-hidden">{t('channel.controlChannel')}</span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item
-            onClick={() => handleRemoveChannel(id)}
-          >
+          <Dropdown.Item onClick={() => handleRemoveChannel(id)}>
             {t('channel.removeChannel')}
           </Dropdown.Item>
-          <Dropdown.Item
-            onClick={() => handleRenameChannel(id)}
-          >
+          <Dropdown.Item onClick={() => handleRenameChannel(id)}>
             {t('channel.renameChannel')}
           </Dropdown.Item>
         </Dropdown.Menu>
