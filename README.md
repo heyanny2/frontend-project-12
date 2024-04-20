@@ -5,6 +5,8 @@
 Hexlet-chat is the real-time chat application, offering user registration, customizable channels, and advanced content filtering.
 https://hexlet-chat-project-zkxl.onrender.com
 
+![RSS-img](./frontend/public/chat.png)
+
 ## Installation and setup:
 ```
 1. git clone git@github.com:ElisabethFox/frontend-project-12.git
